@@ -1,230 +1,320 @@
 <!DOCTYPE HTML>
 <!--
-	Massively by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+  Massively by HTML5 UP
+  html5up.net | @ajlkn
+  Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
-	<head>
-		<title>Massively by HTML5 UP</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
+  <head>
+    <title>Yassin Abulnaga — Portfolio</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
-		<!-- Wrapper -->
-			<div id="wrapper" class="fade-in">
+    <meta name="description" content="Electrical Engineering student at UBC. Experienced in FPGA/RTL, embedded systems, and digital design." />
+    <meta property="og:title" content="Yassin Abulnaga — Portfolio" />
+    <meta property="og:description" content="FPGA/RTL • Embedded Systems • Robotics" />
+    <meta property="og:image" content="images/og-cover.jpg" />
 
-				<!-- Intro -->
-					<div id="intro">
-						<h1><br />
-						Yassin Abulnaga</h1>
-						<p>Electrical Engineering Student @ UBC<a href="https://twitter.com/ajlkn"></a>  <a href="https://html5up.net"></a><br />
-						Experienced in FPGA/RTL, embedded systems, and digital design. <a href="https://html5up.net/license"></a>.</p>
-						<ul class="actions">
-							<li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
-						</ul>
-					</div>
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
-				<!-- Header -->
-					<header id="header">
-						<a href="index.html" class="logo">Massively</a>
-					</header>
+    <style>
+      /* Small helpers to make it feel more portfolio-like */
+      .project-blurb { margin-top: .5rem; opacity: .9; }
+      .case-study { padding: 3rem 2rem; border-top: 1px solid rgba(0,0,0,.08); }
+      .case-study .row { display: grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap: 1.25rem; }
+      .backlink { display:inline-block; margin-top:.75rem; }
+      /* Anchor offset for sticky nav scroll */
+      :target::before { content:""; display:block; height:4.5rem; margin-top:-4.5rem; visibility:hidden; }
+    </style>
+  </head>
+  <body class="is-preload">
 
-				<!-- Nav -->
-					<nav id="nav">
-						<ul class="links">
-							<li class="active"><a href="index.html">This is Massively</a></li>
-							<li><a href="generic.html">Generic Page</a></li>
-							<li><a href="elements.html">Elements Reference</a></li>
-						</ul>
-						<ul class="icons">
-							<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-							<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-							<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-							<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-						</ul>
-					</nav>
+    <!-- Wrapper -->
+    <div id="wrapper" class="fade-in">
 
-				<!-- Main -->
-					<div id="main">
+      <!-- Intro -->
+      <div id="intro">
+        <h1>Yassin Abulnaga</h1>
+        <p>
+          Electrical Engineering student @ UBC. <br />
+          Experienced in FPGA/RTL (Verilog/SystemVerilog), embedded systems (STM32/PIC32), and digital design.
+        </p>
+        <ul class="actions">
+          <li><a href="#projects" class="button icon solid solo fa-arrow-down scrolly">View Projects</a></li>
+        </ul>
+      </div>
 
-						<!-- Featured Post -->
-							<article class="post featured">
-								<header class="major">
-									<span class="date">April 25, 2017</span>
-									<h2><a href="#">And this is a<br />
-									massive headline</a></h2>
-									<p>Aenean ornare velit lacus varius enim ullamcorper proin aliquam<br />
-									facilisis ante sed etiam magna interdum congue. Lorem ipsum dolor<br />
-									amet nullam sed etiam veroeros.</p>
-								</header>
-								<a href="#" class="image main"><img src="images/pic01.jpg" alt="" /></a>
-								<ul class="actions special">
-									<li><a href="#" class="button large">Full Story</a></li>
-								</ul>
-							</article>
+      <!-- Header -->
+      <header id="header">
+        <a href="index.html" class="logo">Yassin Abulnaga</a>
+      </header>
 
-						<!-- Posts -->
-							<section class="posts">
-								<article>
-									<header>
-										<span class="date">April 24, 2017</span>
-										<h2><a href="#">Sed magna<br />
-										ipsum faucibus</a></h2>
-									</header>
-									<a href="#" class="image fit"><img src="images/pic02.jpg" alt="" /></a>
-									<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis magna etiam.</p>
-									<ul class="actions special">
-										<li><a href="#" class="button">Full Story</a></li>
-									</ul>
-								</article>
-								<article>
-									<header>
-										<span class="date">April 22, 2017</span>
-										<h2><a href="#">Primis eget<br />
-										imperdiet lorem</a></h2>
-									</header>
-									<a href="#" class="image fit"><img src="images/pic03.jpg" alt="" /></a>
-									<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis magna etiam.</p>
-									<ul class="actions special">
-										<li><a href="#" class="button">Full Story</a></li>
-									</ul>
-								</article>
-								<article>
-									<header>
-										<span class="date">April 18, 2017</span>
-										<h2><a href="#">Ante mattis<br />
-										interdum dolor</a></h2>
-									</header>
-									<a href="#" class="image fit"><img src="images/pic04.jpg" alt="" /></a>
-									<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis magna etiam.</p>
-									<ul class="actions special">
-										<li><a href="#" class="button">Full Story</a></li>
-									</ul>
-								</article>
-								<article>
-									<header>
-										<span class="date">April 14, 2017</span>
-										<h2><a href="#">Tempus sed<br />
-										nulla imperdiet</a></h2>
-									</header>
-									<a href="#" class="image fit"><img src="images/pic05.jpg" alt="" /></a>
-									<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis magna etiam.</p>
-									<ul class="actions special">
-										<li><a href="#" class="button">Full Story</a></li>
-									</ul>
-								</article>
-								<article>
-									<header>
-										<span class="date">April 11, 2017</span>
-										<h2><a href="#">Odio magna<br />
-										sed consectetur</a></h2>
-									</header>
-									<a href="#" class="image fit"><img src="images/pic06.jpg" alt="" /></a>
-									<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis magna etiam.</p>
-									<ul class="actions special">
-										<li><a href="#" class="button">Full Story</a></li>
-									</ul>
-								</article>
-								<article>
-									<header>
-										<span class="date">April 7, 2017</span>
-										<h2><a href="#">Augue lorem<br />
-										primis vestibulum</a></h2>
-									</header>
-									<a href="#" class="image fit"><img src="images/pic07.jpg" alt="" /></a>
-									<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis magna etiam.</p>
-									<ul class="actions special">
-										<li><a href="#" class="button">Full Story</a></li>
-									</ul>
-								</article>
-							</section>
+      <!-- Nav -->
+      <nav id="nav">
+        <ul class="links">
+          <li class="active"><a href="#projects">Projects</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#footer">Contact</a></li>
+        </ul>
+        <ul class="icons">
+          <li><a href="https://www.linkedin.com/in/yassinabulnaga/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+          <li><a href="https://github.com/yassinabulnaga" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+          <!-- add more if you want -->
+        </ul>
+      </nav>
 
-						<!-- Footer -->
-							<footer>
-								<div class="pagination">
-									<!--<a href="#" class="previous">Prev</a>-->
-									<a href="#" class="page active">1</a>
-									<a href="#" class="page">2</a>
-									<a href="#" class="page">3</a>
-									<span class="extra">&hellip;</span>
-									<a href="#" class="page">8</a>
-									<a href="#" class="page">9</a>
-									<a href="#" class="page">10</a>
-									<a href="#" class="next">Next</a>
-								</div>
-							</footer>
+      <!-- Main -->
+      <div id="main">
 
-					</div>
+        <!-- Featured Project -->
+        <article class="post featured" id="projects">
+          <header class="major">
+            <span class="date">Featured Project</span>
+            <h2><a href="#fpga-cpu">16-bit RISC CPU on FPGA</a></h2>
+            <p>
+              Modular ALU, register file, datapath, and control FSM on DE1-SoC with memory-mapped I/O. Verified in ModelSim,
+              synthesized in Quartus, and brought up on hardware.
+            </p>
+          </header>
+          <a href="#fpga-cpu" class="image main"><img src="images/fpga-cpu.jpg" alt="16-bit RISC CPU on FPGA cover" /></a>
+          <ul class="actions special">
+            <li><a href="#fpga-cpu" class="button large">Details</a></li>
+            <li><a href="https://github.com/yassinabulnaga" class="button large">Code</a></li>
+          </ul>
+        </article>
 
-				<!-- Footer -->
-					<footer id="footer">
-						<section>
-							<form method="post" action="#">
-								<div class="fields">
-									<div class="field">
-										<label for="name">Name</label>
-										<input type="text" name="name" id="name" />
-									</div>
-									<div class="field">
-										<label for="email">Email</label>
-										<input type="text" name="email" id="email" />
-									</div>
-									<div class="field">
-										<label for="message">Message</label>
-										<textarea name="message" id="message" rows="3"></textarea>
-									</div>
-								</div>
-								<ul class="actions">
-									<li><input type="submit" value="Send Message" /></li>
-								</ul>
-							</form>
-						</section>
-						<section class="split contact">
-							<section class="alt">
-								<h3>Address</h3>
-								<p>1234 Somewhere Road #87257<br />
-								Nashville, TN 00000-0000</p>
-							</section>
-							<section>
-								<h3>Phone</h3>
-								<p><a href="#">(000) 000-0000</a></p>
-							</section>
-							<section>
-								<h3>Email</h3>
-								<p><a href="#">info@untitled.tld</a></p>
-							</section>
-							<section>
-								<h3>Social</h3>
-								<ul class="icons alt">
-									<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-									<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-									<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-									<li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-								</ul>
-							</section>
-						</section>
-					</footer>
+        <!-- Projects Grid -->
+        <section class="posts">
 
-				<!-- Copyright -->
-					<div id="copyright">
-						<ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
-					</div>
+          <!-- Coin Retrieval Robot -->
+          <article>
+            <header>
+              <span class="date">Robotics / Embedded</span>
+              <h2><a href="#coin-robot">Coin Retrieval Robot</a></h2>
+            </header>
+            <a href="#coin-robot" class="image fit"><img src="images/coin-robot.jpg" alt="Coin Retrieval Robot" /></a>
+            <p class="project-blurb">
+              STM32 autonomy + PIC32 remote, IR edge detection, JDY-40 UART link, servo-driven electromagnet,
+              interrupt-driven FSM and PWM motor control.
+            </p>
+            <ul class="actions special">
+              <li><a href="#coin-robot" class="button">Details</a></li>
+              <li><a href="https://github.com/yassinabulnaga" class="button">Code</a></li>
+            </ul>
+          </article>
 
-			</div>
+          <!-- Reflow Oven Controller -->
+          <article>
+            <header>
+              <span class="date">Control / Instrumentation</span>
+              <h2><a href="#reflow-oven">Reflow Oven Controller</a></h2>
+            </header>
+            <a href="#reflow-oven" class="image fit"><img src="images/reflow-oven.jpg" alt="Reflow Oven Controller" /></a>
+            <p class="project-blurb">
+              8051 Assembly + Python logging, K-type thermocouple with OP07 amplifier, LCD UI, passcode lock,
+              FSM thermal profile (preheat/soak/reflow/cool).
+            </p>
+            <ul class="actions special">
+              <li><a href="#reflow-oven" class="button">Details</a></li>
+              <li><a href="https://github.com/yassinabulnaga" class="button">Code</a></li>
+            </ul>
+          </article>
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+          <!-- FPGA ML Inference Demo -->
+          <article>
+            <header>
+              <span class="date">FPGA / ML</span>
+              <h2><a href="#fpga-ml">FPGA ML Inference Demo</a></h2>
+            </header>
+            <a href="#fpga-ml" class="image fit"><img src="images/fpga-ml.jpg" alt="FPGA ML Inference" /></a>
+            <p class="project-blurb">
+              Hand-coded neurons for the Fashion-MNIST pipeline; explores trade-offs between HDL hardcoding vs. HLS approaches for edge inference.
+            </p>
+            <ul class="actions special">
+              <li><a href="#fpga-ml" class="button">Details</a></li>
+              <li><a href="https://github.com/yassinabulnaga" class="button">Code</a></li>
+            </ul>
+          </article>
 
-	</body>
+        </section>
 
+        <!-- Case Study Sections (same page anchors) -->
+        <section id="fpga-cpu" class="case-study">
+          <header class="major">
+            <h2>16-bit RISC CPU on FPGA</h2>
+            <p>Verilog RTL on DE1-SoC with modular ALU, register file, datapath, instruction/data memory, and memory-mapped I/O.</p>
+          </header>
+          <div class="row">
+            <div>
+              <h3>Overview</h3>
+              <p>
+                Designed a clean, modular CPU: separated control FSM and datapath; implemented arithmetic/logic ops, branches,
+                and memory operations. Mapped board switches/LEDs as I/O for fast verification.
+              </p>
+            </div>
+            <div>
+              <h3>Highlights</h3>
+              <ul>
+                <li>ALU ops: add/sub/and/or/xor/shifts/compare</li>
+                <li>Datapath + control FSM with clear interfaces</li>
+                <li>Memory-mapped I/O, instruction & data RAM</li>
+                <li>ModelSim testbenches; Quartus synthesis</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Tech Stack</h3>
+              <p>Verilog, Quartus, ModelSim, DE1-SoC</p>
+              <p><a href="https://github.com/yassinabulnaga" class="button small">Repository</a></p>
+            </div>
+          </div>
+          <a href="#projects" class="backlink">↑ Back to Projects</a>
+        </section>
+
+        <section id="coin-robot" class="case-study">
+          <header class="major">
+            <h2>Coin Retrieval Robot</h2>
+            <p>STM32 onboard autonomy + PIC32 remote, UART telemetry, IR edge detection, servo electromagnet.</p>
+          </header>
+          <div class="row">
+            <div>
+              <h3>Overview</h3>
+              <p>
+                Built an interrupt-driven control stack with PWM motor control and serial telemetry. Manual override via PS2-style remote.
+              </p>
+            </div>
+            <div>
+              <h3>Highlights</h3>
+              <ul>
+                <li>Dual-MCU architecture (STM32 + PIC32)</li>
+                <li>JDY-40 wireless UART link</li>
+                <li>LCD status + logging</li>
+                <li>Finite-state machine control</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Tech Stack</h3>
+              <p>C (STM32CubeMX/Keil), MPLAB X (PIC32), UART/I²C/SPI</p>
+              <p><a href="https://github.com/yassinabulnaga" class="button small">Repository</a></p>
+            </div>
+          </div>
+          <a href="#projects" class="backlink">↑ Back to Projects</a>
+        </section>
+
+        <section id="reflow-oven" class="case-study">
+          <header class="major">
+            <h2>Reflow Oven Controller</h2>
+            <p>8051 ASM + Python visualization, K-type thermocouple with OP07 amplifier, LCD UI, door actuator.</p>
+          </header>
+          <div class="row">
+            <div>
+              <h3>Overview</h3>
+              <p>
+                Implemented an FSM thermal profile (preheat/soak/reflow/cool), passcode lock, and UART logging to Python for live plots.
+              </p>
+            </div>
+            <div>
+              <h3>Highlights</h3>
+              <ul>
+                <li>Closed-loop temperature control</li>
+                <li>Custom characters on LCD UI</li>
+                <li>Automated door mechanism</li>
+                <li>Data logging + analysis</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Tech Stack</h3>
+              <p>8051 Assembly, Python, UART, LCD, OP07, K-type thermocouple</p>
+              <p><a href="https://github.com/yassinabulnaga" class="button small">Repository</a></p>
+            </div>
+          </div>
+          <a href="#projects" class="backlink">↑ Back to Projects</a>
+        </section>
+
+        <section id="fpga-ml" class="case-study">
+          <header class="major">
+            <h2>FPGA ML Inference Demo</h2>
+            <p>Hand-coded neurons for Fashion-MNIST; compares HDL hardcoding vs. HLS approaches for edge deployment.</p>
+          </header>
+          <div class="row">
+            <div>
+              <h3>Overview</h3>
+              <p>
+                Prototyped a tiny accelerator by hard-wiring trained weights into RTL and exploring resource/speed trade-offs.
+              </p>
+            </div>
+            <div>
+              <h3>Highlights</h3>
+              <ul>
+                <li>Fixed-point arithmetic and scaling</li>
+                <li>Pipelining for higher throughput</li>
+                <li>Area vs. latency exploration</li>
+                <li>Notes on hls4ml vs. hand RTL</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Tech Stack</h3>
+              <p>Verilog, Quartus, ModelSim</p>
+              <p><a href="https://github.com/yassinabulnaga" class="button small">Repository</a></p>
+            </div>
+          </div>
+          <a href="#projects" class="backlink">↑ Back to Projects</a>
+        </section>
+
+        <!-- About -->
+        <section class="post" id="about">
+          <header class="major">
+            <h2>About</h2>
+          </header>
+          <p>
+            I design and debug hardware-centric systems end-to-end: RTL (Verilog/SystemVerilog) for FPGA, FSM/datapath
+            architectures, timing/constraints, and embedded C on STM32/PIC32. I like clean interfaces, reproducible builds,
+            and making hardware behave under real constraints.
+          </p>
+          <ul class="actions">
+            <li><a href="assets/Yassin_Abulnaga_Resume.pdf" class="button">Resume</a></li>
+          </ul>
+        </section>
+
+        <!-- (Optional) Pagination removed for a portfolio look -->
+
+      </div>
+
+      <!-- Footer (Contact) -->
+      <footer id="footer">
+        <section class="split contact">
+          <section class="alt">
+            <h3>Location</h3>
+            <p>Vancouver, BC · Canada</p>
+          </section>
+          <section>
+            <h3>Email</h3>
+            <p><a href="mailto:yabulnag@gmail.com">yabulnag@gmail.com</a></p>
+          </section>
+          <section>
+            <h3>Links</h3>
+            <ul class="icons alt">
+              <li><a href="https://www.linkedin.com/in/yassinabulnaga/" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+              <li><a href="https://github.com/yassinabulnaga" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+            </ul>
+          </section>
+        </section>
+      </footer>
+
+      <!-- Copyright -->
+      <div id="copyright">
+        <ul><li>&copy; 2025 Yassin Abulnaga</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+      </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
 </html>
