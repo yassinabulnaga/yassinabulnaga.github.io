@@ -26,8 +26,8 @@
           <li><a href="reflow-oven.html">Oven Reflow Controller</a></li>
         </ul>
         <ul class="icons">
-          <li><a href="https://www.linkedin.com/in/yassinabulnaga/" class="icon brands fa-linkedin"></a></li>
-          <li><a href="https://github.com/yassinabulnaga" class="icon brands fa-github"></a></li>
+          <li><a href="https://www.linkedin.com/in/yassinabulnaga/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+          <li><a href="https://github.com/yassinabulnaga" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
         </ul>
       </nav>
 
@@ -36,34 +36,186 @@
         <section class="post">
           <header class="major">
             <h1>Coin Retrieval Robot</h1>
+            <p>A second-year mechatronics project at UBC for <strong>ELEC291</strong>, involving the design and construction of a robot capable of retrieving metallic coins in both autonomous and manual modes using a PS2-controlled wireless interface. For more details, see PDFs → Project 2 Report.</p>
           </header>
-          <div class="image main"><img src="images/coin-robot.jpg" alt="Coin Retrieval Robot" /></div>
-          <p>
-            Built a coin-retrieving robot using STM32 and PIC32 microcontrollers with wireless PS2 remote control.
-            Implemented interrupt-driven FSM, PWM motor control, IR edge detection, and an electromagnet pickup
-            achieving 90%+ accuracy in 50+ trials. 
-          </p>
-          <ul class="actions special">
-            <li><a href="https://github.com/yassinabulnaga/coin-retrieval-robot" class="button large">View on GitHub</a></li>
+
+          <!-- Hero image: use local image -->
+          <div class="image main">
+            <img src="images/coin-robot.jpg" alt="Robot Front View" />
+          </div>
+
+          <hr />
+
+          <h2>1. System Overview</h2>
+
+          <h3>1.1 Hardware System Overview</h3>
+          <p>This robot was designed as a dual-layer autonomous and manual coin retrieval system. Key subsystems include:</p>
+          <ul>
+            <li><strong>Colpitts Oscillator</strong> – Real-time metal detection via frequency shift.</li>
+            <li><strong>Electromagnet + Servo</strong> – Pick up and release metallic coins.</li>
+            <li><strong>IR Sensors</strong> – Detect arena boundaries to prevent robot escape.</li>
+            <li><strong>LCD Screen</strong> – Displays real-time coin count and status messages.</li>
+            <li><strong>Dual-layer Breadboard Stack</strong> – Hosts STM32 microcontroller and logic circuitry.</li>
+            <li><strong>PS2 Remote + JDY-40 Module</strong> – Wireless control through a PIC32-based transmitter.</li>
           </ul>
+
+          <p style="text-align:center;">
+            <img width="721" alt="Hardware Block Diagram" src="https://github.com/user-attachments/assets/398fa3c0-0e3d-4983-94f3-8f0fc204dc6a" />
+            <br /><em>Figure 1: Block diagram of the hardware components of the robot.</em>
+          </p>
+
+          <h3>💻 1.2 Software System Overview</h3>
+          <p style="text-align:center;">
+            <img width="488" alt="Software Block Diagram" src="https://github.com/user-attachments/assets/5703a347-9a43-423e-9407-53d11dd29174" />
+            <br /><em>Figure 2: Block diagram of the software components of the robot.</em>
+          </p>
+
+          <h3>1.3 Remote Controller Overview</h3>
+          <p>Built around a <strong>PIC32MX130F064B</strong>, this handheld device provides real-time robot control and feedback:</p>
+          <ul>
+            <li><strong>PS2 Controller Input</strong> — Reads analog stick and button data for control.</li>
+            <li><strong>16x2 LCD Display</strong> — Shows coin count and metal detection strength.</li>
+            <li><strong>Speaker Output</strong> — Beeps in proportion to metal signal strength.</li>
+            <li><strong>JDY-40 Bluetooth</strong> — Sends command packets to the robot, requests telemetry.</li>
+          </ul>
+
+          <hr />
+
+          <h2>2. Communication Protocol</h2>
+          <table>
+            <thead>
+              <tr><th>Symbol</th><th>Meaning</th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>!</code></td><td>Start of command</td><td>Followed by 6-character PS2 data</td></tr>
+              <tr><td><code>@</code></td><td>Data request from remote</td><td>Robot replies with signal + coin data</td></tr>
+            </tbody>
+          </table>
+          <p><strong>Command format:</strong> <code>[b1][b2][RX][RY][LX][LY]</code>, where:</p>
+          <ul>
+            <li><code>b1</code>, <code>b2</code> = button codes (e.g., <code>X</code>, <code>O</code>, <code>L</code>, <code>R</code>)</li>
+            <li>Joysticks encoded as <code>'1'</code>–<code>'9'</code> based on analog position</li>
+          </ul>
+          <p><strong>Robot responds with:</strong> <code>xxxxxcc</code> → <code>xxxxx</code> = signal strength, <code>cc</code> = coin count</p>
+
+          <hr />
+
+          <h2>3. Features &amp; Capabilities</h2>
+
+          <h3>Core Features</h3>
+          <ul>
+            <li>Dual mode operation: <strong>manual</strong> (PS2 joystick) and <strong>autonomous</strong> (FSM-driven)</li>
+            <li>Metal detection using Colpitts oscillator + ADC logic</li>
+            <li>Perimeter detection using wire-induced signal pickup</li>
+            <li>Wireless serial communication over JDY-40 Bluetooth</li>
+            <li>Coin pickup with servo arm and electromagnet</li>
+          </ul>
+
+          <h3>Bonus Features</h3>
+          <ul>
+            <li>PS2-based input for intuitive controls</li>
+            <li>LCD live telemetry (coin count, signal strength)</li>
+            <li>Speaker feedback that increases beeping with signal</li>
+            <li>Pause/resume support in autonomous mode</li>
+            <li>90° precision turns (L3/R3)</li>
+            <li>Inch forward/backward (R1/R2)</li>
+            <li>Semi-automated pickup (L2)</li>
+          </ul>
+
+          <hr />
+
+          <h2>4. Testing &amp; Calibration</h2>
+
+          <h3>Oscilloscope Tuning – Colpitts Oscillator (Metal Detection)</h3>
+          <p>Two oscilloscope snapshots were taken to verify the oscillator’s output waveform and assess how the signal changes in the presence of nearby metal.</p>
+
+          <p style="text-align:center;">
+            <img src="https://github.com/user-attachments/assets/d24e52ae-01d5-483a-9630-1540a24fbfc6" width="600" alt="No coin oscilloscope" />
+            <br /><em>Figure 3: Colpitts oscillator signal without coin nearby – long pulse width observed.</em>
+          </p>
+
+          <p style="text-align:center;">
+            <img src="https://github.com/user-attachments/assets/ca66b617-6422-4d3e-9a66-91e76bb94fe8" width="600" alt="Coin present oscilloscope" />
+            <br /><em>Figure 4: Colpitts oscillator with coin present – narrower pulse due to frequency shift.</em>
+          </p>
+
+          <h3>ADC Voltage Threshold Calibration – Perimeter Detection</h3>
+          <p>The graph below shows analog readings from two perimeter sensor coils, captured via the STM32’s ADC. A voltage spike is clearly observed when the robot nears the perimeter wire.</p>
+
+          <p style="text-align:center;">
+            <img src="https://github.com/user-attachments/assets/475e8e40-0011-497c-be48-128a9db58001" width="600" alt="ADC readings graph" />
+            <br /><em>Figure 5: ADC readings from perimeter sensors – note the increase in signal strength above threshold (~2.4V).</em>
+          </p>
+
+          <h3>JDY-40 UART Communication Test</h3>
+          <p>Serial logs and debug outputs were used to confirm successful bidirectional data exchange between remote and robot via JDY-40 modules.</p>
+
+          <p style="text-align:center;">
+            <img src="images/jdy40-serial-log.png" width="600" alt="JDY-40 serial terminal log" />
+            <br /><em>Figure 6: Serial terminal showing remote command and robot response at 9600 baud.</em>
+          </p>
+
+          <hr />
+
+          <h2>5. Media &amp; Demonstrations</h2>
+          <p class="video">
+            <a href="https://www.youtube.com/watch?v=KWwsTouMKVg" target="_blank" class="button large">Watch Demo on YouTube</a>
+          </p>
+
+          <hr />
+
+          <h2>6. Authors</h2>
+          <p>Group A13, ELEC291 UBC 2025<br />Special thanks to Dr. Jesus Calvino-Fraga for project framework.</p>
+
+          <div style="overflow-x:auto;">
+            <table>
+              <thead>
+                <tr><th>Team Member</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Yassin Abulnaga</td></tr>
+                <tr><td>Faris Alshouani</td></tr>
+                <tr><td>Ali Danesh</td></tr>
+                <tr><td>Ronald Feng</td></tr>
+                <tr><td>Drédyn Fontana</td></tr>
+                <tr><td>Nick Unruh</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <hr />
+
+          <h2>📄 License</h2>
+          <p>Copyright © 2025. All rights reserved. Do not reproduce without permission.</p>
         </section>
       </div>
 
       <!-- Footer -->
       <footer id="footer">
         <section class="split contact">
-          <section class="alt"><h3>Address</h3><p>3615 W 17 Ave<br />Vancouver, BC</p></section>
-          <section><h3>Phone</h3><p><a href="tel:+12362685455">+1 (236) 268-5455</a></p></section>
-          <section><h3>Email</h3><p><a href="mailto:yabulnag@gmail.com">yabulnag@gmail.com</a></p></section>
-          <section><h3>Social</h3>
+          <section class="alt">
+            <h3>Address</h3>
+            <p>3615 W 17 Ave<br />Vancouver, BC</p>
+          </section>
+          <section>
+            <h3>Phone</h3>
+            <p><a href="tel:+12362685455">+1 (236) 268-5455</a></p>
+          </section>
+          <section>
+            <h3>Email</h3>
+            <p><a href="mailto:yabulnag@gmail.com">yabulnag@gmail.com</a></p>
+          </section>
+          <section>
+            <h3>Social</h3>
             <ul class="icons alt">
-              <li><a href="https://www.linkedin.com/in/yassinabulnaga/" class="icon brands alt fa-linkedin"></a></li>
-              <li><a href="https://github.com/yassinabulnaga" class="icon brands alt fa-github"></a></li>
+              <li><a href="https://www.linkedin.com/in/yassinabulnaga/" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+              <li><a href="https://github.com/yassinabulnaga" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
             </ul>
           </section>
         </section>
       </footer>
 
+      <!-- Copyright -->
       <div id="copyright">
         <ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
       </div>
