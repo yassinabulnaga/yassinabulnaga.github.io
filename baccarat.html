@@ -43,7 +43,6 @@
           <p>
             A digital Baccarat engine implemented in SystemVerilog on the <strong>DE1-SoC</strong>. 
             The design combines a simple datapath with a finite-state machine controller to deal cards, compute hand scores (mod&nbsp;10), and display results on HEX displays and LEDs. 
-            The project showcases RTL design, module-level verification in ModelSim, and on-board validation in Quartus.
           </p>
           <p style="text-align:center;">
             <img src="images/baccarat-fpga.jpg" alt="FPGA Baccarat running on DE1-SoC" style="max-width: 900px; width:100%; height:auto;" />
@@ -67,25 +66,26 @@
 
           <h3>Modules</h3>
           <ul>
-            <li><strong>dealcard.sv</strong> — Free-running counter on 50&nbsp;MHz clocks through 1..13; sampled on user step to emulate randomness.</li>
-            <li><strong>reg4.sv</strong> — 4-bit registers hold <em>player</em> and <em>banker</em> cards (0 = no card).</li>
-            <li><strong>card7seg.sv</strong> — Combinational 4-bit→7-seg encoder (A, 2..9, 0, J, q, H; blank for 0/14/15). Active-low HEX.</li>
-            <li><strong>scorehand.sv</strong> — Maps face cards (10/J/Q/K) to 0, sums up to three cards, outputs <code>(sum mod 10)</code>.</li>
-            <li><strong>statemachine.sv</strong> — Sequencer for deal order and third-card rules; asserts <code>load_pcard*</code>/<code>load_dcard*</code>.</li>
-            <li><strong>datapath.sv</strong> — Wires registers, scoring, and display logic; exposes scores and third-card value to FSM.</li>
-            <li><strong>task5.sv</strong> (top) — Toplevel integration for DE1-SoC I/O.</li>
+
+          <h3>Modules</h3>
+          <ul>
+            <li><strong>Dealcard</strong> — Free-running counter on 50&nbsp;MHz clocks through 1..13; sampled on user step to emulate randomness.</li>
+            <li><strong>Scorehand</strong> — Maps face cards (10/J/Q/K) to 0, sums up to three cards, outputs <code>(sum mod 10)</code>.</li>
+            <li><strong>Statemachine</strong> — Sequencer for deal order and third-card rules.</li>
+            <li><strong>Datapath</strong> — Wires registers, scoring, and display logic.</li>         
           </ul>
 
+
           <p style="text-align:center;">
-            <img src="figures/block-diagram.png" alt="Baccarat block diagram" style="max-width: 900px; width:100%; height:auto;" />
-            <br/><em>Block diagram: state machine (control) + datapath (storage/compute).</em>
+            <img src="figures/datapath.png" alt="Baccarat block diagram" style="max-width: 900px; width:100%; height:auto;" />
+            <br/><em>Block diagram: Datapath (storage/compute).</em>
           </p>
 
           <h3>Interfaces &amp; I/O Mapping</h3>
           <ul>
             <li><strong>Inputs:</strong> <code>CLOCK_50</code> (dealcard), <code>KEY0</code>=slow_clock, <code>KEY3</code>=resetb (sync, active-low).</li>
             <li><strong>Displays:</strong> <code>HEX0..HEX2</code> = Player cards, <code>HEX3..HEX5</code> = Banker cards (active-low).</li>
-            <li><strong>LEDs:</strong> <code>LEDR[3:0]</code> = Player score, <code>LEDR[7:4]</code> = Banker score, <code>LEDR[8]</code>=Player win, <code>LEDR[9]</code>=Banker win (both=Tie).</li>
+            <li><strong>LEDs:</strong> <code>LEDR[3:0]</code> = Player score, <code>LEDR[7:4]</code> = Banker score, <code>LEDR[8]</code>=Player win, <code>LEDR[9]</code>=Banker win.</li>
           </ul>
 
           <!-- Results -->
@@ -93,15 +93,9 @@
           <ul>
             <li>Unit testbenches for <code>scorehand</code>, <code>statemachine</code>, and <code>datapath</code> pass (RTL and post-synthesis netlist).</li>
             <li>On-board demo: correct dealing sequence, accurate scores (mod&nbsp;10), and correct third-card behavior.</li>
-            <li>HEX accurately shows A/2..9/0/J/q/H; LEDs indicate scores and winner per rules.</li>
-            <li>Observed occasional out-of-range sample when pressing slow_clock at metastable moments — expected due to async sampling of the 50&nbsp;MHz counter (documented as a known limitation).</li>
+            <li>HEX accurately displays cards; LEDs indicate scores and winner per rules.</li>
           </ul>
 
-          <!-- Acknowledgments -->
-          <h2>Acknowledgments</h2>
-          <p>
-            Personal project inspired by course materials and the DE1-SoC platform. Thanks to the UBC teaching team for the excellent reference workflows.
-          </p>
 
         </section>
       </div>
