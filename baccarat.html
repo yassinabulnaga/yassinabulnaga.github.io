@@ -51,10 +51,10 @@
           <!-- Goals -->
           <h2>Goals</h2>
           <ul>
-            <li>Design a clean <em>datapath + controller</em> architecture for a casino-style Baccarat game.</li>
+            <li>Design a clean <em>datapath + controller</em> architecture for a Baccarat game.</li>
             <li>Drive <strong>HEX0–HEX5</strong> with card values and <strong>LEDR</strong> with scores/win indicators.</li>
-            <li>Write self-checking testbenches and perform post-synthesis checks.</li>
-            <li>Deploy to DE1-SoC and verify real-time operation with push-button inputs.</li>
+            <li>Write self checking testbenches and perform post-synthesis checks.</li>
+            <li>Deploy to DE1-SoC and verify real time operation with push-button inputs.</li>
           </ul>
 
           <!-- System Design -->
@@ -63,9 +63,6 @@
             The hardware is split into a datapath that stores cards and computes scores, and a controller FSM that sequences the game per Punto Banco rules. 
             User presses <code>KEY0</code> (slow_clock) to step through the game; <code>KEY3</code> is a synchronous active-low reset.
           </p>
-
-          <h3>Modules</h3>
-          <ul>
 
           <h3>Modules</h3>
           <ul>
@@ -78,7 +75,7 @@
 
           <p style="text-align:center;">
             <img src="images/datapath.png" alt="Baccarat block diagram" style="max-width: 900px; width:100%; height:auto;" />
-            <br/><em>Datapath.</em>
+            <br/><em>Datapath</em>
           </p>
 
           <h3>Interfaces &amp; I/O Mapping</h3>

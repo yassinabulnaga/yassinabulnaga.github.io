@@ -1,32 +1,26 @@
 <!DOCTYPE HTML>
-<!--
-  Massively by HTML5 UP
-  html5up.net | @ajlkn
-  Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
   <head>
-    <title>Generic Page - Yassin Abulnaga</title>
+    <title>16-bit RISC CPU — Yassin Abulnaga</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
   </head>
   <body class="is-preload">
-    <!-- Wrapper -->
-    <div id="wrapper" class="fade-in"><!-- match Home page for notch styling/animation -->
+    <div id="wrapper" class="fade-in">
 
-      <!-- Header (copied from Home) -->
+      <!-- Header -->
       <header id="header">
         <a href="index.html" class="logo">About</a>
       </header>
 
-      <!-- Nav (copied from Home) -->
+      <!-- Nav -->
       <nav id="nav">
         <ul class="links">
           <li><a href="index.html">Home</a></li>
           <li><a href="resume.html">Resume</a></li>
-          <li><a href="risc-cpu.html">RISC CPU</a></li>
+          <li class="active"><a href="risc-cpu.html">RISC CPU</a></li>
           <li><a href="baccarat.html">FPGA Baccarat</a></li>
           <li><a href="coin-robot.html">Coin Retrieval Robot</a></li>
           <li><a href="reflow-oven.html">Oven Reflow Controller</a></li>
@@ -37,52 +31,133 @@
         </ul>
       </nav>
 
-      <!-- Main (kept your content) -->
+      <!-- Main -->
       <div id="main">
         <section class="post">
           <header class="major">
-            <span class="date">April 25, 2017</span>
-            <h1>This is a<br/>Generic Page</h1>
-            <p>Aenean ornare velit lacus varius enim ullamcorper proin aliquam<br/>
-              facilisis ante sed etiam magna interdum congue. Lorem ipsum dolor<br/>
-              amet nullam sed etiam veroeros.</p>
+            <h1>16-bit Simple RISC Machine (SRM)</h1>
+            <p style="margin-top:.5rem">Personal project: RTL design, verification, and on-board bring-up on DE1-SoC</p>
           </header>
-          <div class="image main"><img src="images/pic01.jpg" alt="" /></div>
-          <p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur sapien risus, commodo eget turpis at, elementum convallis enim turpis, lorem ipsum dolor sit amet nullam.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus. Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum.</p>
+
+          <!-- Abstract -->
+          <h2>Abstract</h2>
+          <p>
+            I designed and implemented a minimalist 16-bit RISC CPU in SystemVerilog, including a clean
+            datapath, a finite-state machine (FSM) controller, an instruction memory with PC &amp; IR,
+            and memory-mapped I/O for switches/LEDs. The processor executes a small but expressive ISA
+            (MOV, ADD, AND, MVN, CMP, LDR, STR, HALT) with single-cycle register moves and multi-cycle ALU
+            and memory ops. The design was verified in ModelSim with self-checking testbenches and
+            deployed on a DE1-SoC board via Quartus.
+          </p>
+
+          <p style="text-align:center;">
+            <img src="images/srm-block-diagram.png" alt="SRM CPU block diagram" style="max-width:900px;width:100%;height:auto;" />
+            <br/><em>High-level block diagram of the SRM CPU (datapath + controller + memory &amp; I/O).</em>
+          </p>
+
+          <!-- Goals -->
+          <h2>Goals</h2>
+          <ul>
+            <li>Build a readable, modular CPU: <em>register file, ALU, shifter, pipeline regs, writeback mux</em>.</li>
+            <li>Design an FSM controller to sequence instruction execution (fetch → decode → execute → writeback).</li>
+            <li>Add instruction memory, program counter, and instruction register for autonomous execution.</li>
+            <li>Support memory-mapped I/O (switches as input, red LEDs as output).</li>
+            <li>Create self-checking testbenches (unit + top) and validate post-synthesis behavior.</li>
+          </ul>
+
+          <!-- System Design -->
+          <h2>System Design</h2>
+          <p>
+            The SRM uses a classic split: a <strong>datapath</strong> for storage/compute and an <strong>FSM controller</strong> that
+            asserts control signals each cycle. Instruction fetch is synchronous from on-chip RAM; decode fields
+            drive muxes and ALUop; results write back through a 4-way mux.
+          </p>
+
+          <h3>Modules</h3>
+          <ul>
+            <li><strong>Register File (8×16)</strong> — single read port, single write port, load-enabled registers R0–R7; combinational reads.</li>
+            <li><strong>ALU</strong> — 16-bit <code>ADD</code>, <code>SUB</code>(via CMP), <code>AND</code>, <code>MVN</code> with Z/N/V flags; purely combinational.</li>
+            <li><strong>Shifter</strong> — LSL#1, LSR#1, ASR#1 applied to the B operand pre-ALU.</li>
+            <li><strong>Pipeline Registers</strong> — A, B, C (load-enable) capture operands and ALU result; <em>Status</em> holds Z/N/V.</li>
+            <li><strong>Writeback Mux</strong> — selects one of {C, sign-extended imm8, mdata, PC} to write into the register file.</li>
+            <li><strong>Instruction Register (IR)</strong> — 16-bit latch of the current instruction; feeds decoder.</li>
+            <li><strong>Program Counter (PC)</strong> — 8-bit, load-enable; increments each fetch (HALT freezes PC).</li>
+            <li><strong>Instruction Memory (RAM)</strong> — 256×16, synchronous read; initialized from <code>data.txt</code>.</li>
+            <li><strong>Memory Interface</strong> — address mux (<code>addr_sel</code>), <code>mem_cmd</code> (MNONE/MREAD/MWRITE), read/write data buses.</li>
+            <li><strong>Memory-Mapped I/O</strong> — <code>0x0140</code> for switches (read), <code>0x0100</code> for red LEDs (write).</li>
+            <li><strong>Controller FSM</strong> — states for RST, IF1, IF2, UpdatePC, Decode, Execute micro-steps per instruction.</li>
+          </ul>
+
+          <p style="text-align:center;">
+            <img src="images/srm-datapath.png" alt="Datapath schematic" style="max-width:900px;width:100%;height:auto;" />
+            <br/><em>Datapath core: regfile, shifter, ALU, A/B/C regs, status, and writeback mux.</em>
+          </p>
+
+          <h3>Instruction Set (implemented)</h3>
+          <ul>
+            <li><strong>MOV Rn,#imm8</strong> (sign-extended); <strong>MOV Rd,Rm{,<span style="white-space:nowrap;">LSL/LSR/ASR#1</span>}</strong></li>
+            <li><strong>ADD Rd,Rn,Rm{,shift}</strong>, <strong>AND Rd,Rn,Rm{,shift}</strong>, <strong>MVN Rd,Rm{,shift}</strong>, <strong>CMP Rn,Rm{,shift}</strong> (sets Z/N/V)</li>
+            <li><strong>LDR Rd,[Rn{,#imm5}]</strong>, <strong>STR Rd,[Rn{,#imm5}]</strong> (data memory &amp; memory-mapped I/O)</li>
+            <li><strong>HALT</strong> (enters halt state; PC stops incrementing)</li>
+          </ul>
+
+          <h3>Verification</h3>
+          <ul>
+            <li><strong>Unit tests</strong> for regfile, ALU, shifter with self-checking <code>err</code> flags and edge-case coverage.</li>
+            <li><strong>CPU tests</strong> exercise fetch/decode, all instruction classes, and multi-cycle sequences.</li>
+            <li><strong>Post-synthesis</strong> compilation in Quartus to check for inferred latches/comb loops; timing sanity.</li>
+          </ul>
+
+          <p style="text-align:center;">
+            <img src="images/srm-waveforms.png" alt="Simulation waveforms" style="max-width:900px;width:100%;height:auto;" />
+            <br/><em>ModelSim traces: instruction fetch (IF1→IF2→UpdatePC) and a sample ADD sequence.</em>
+          </p>
+
+          <!-- Results -->
+          <h2>Results</h2>
+          <ul>
+            <li>CPU successfully runs programs from on-chip RAM; HALT supported.</li>
+            <li>All core instructions verified in simulation; memory-mapped I/O demo mirrors switches to LEDs (with shift/logic transform).</li>
+            <li>Stable on hardware (DE1-SoC): correct HEX/LED outputs, deterministic stepping, clean reset/idle behavior.</li>
+            <li>Clean synthesis: no inferred latches; modular hierarchy (DP.REGFILE.R0–R7) for easy introspection.</li>
+          </ul>
+
+          <!-- Acknowledgments -->
+          <h2>Acknowledgments</h2>
+          <p>
+            Thanks to the UBC ECE community for guidelines and reference workflows. This page presents the work as a
+            personal project; all RTL, testbenches, and demo integration were implemented and adapted by me.
+          </p>
+
+          <!-- Optional: Repo / Docs buttons -->
+          <!--
+          <ul class="actions special">
+            <li><a href="https://github.com/your_repo" class="button">View Source</a></li>
+            <li><a href="documents/srm_data.txt" class="button">Sample data.txt</a></li>
+          </ul>
+          -->
         </section>
       </div>
 
-      <!-- Footer (already matches Home; leaving as-is) -->
-     	<footer id="footer">
-  <section class="split contact">
-    <section class="alt">
-      <h3>Address</h3>
-      <p>3615 W 17 Ave<br />Vancouver, BC</p>
-    </section>
-    <section>
-      <h3>Phone</h3>
-      <p><a href="tel:+12362685455">+1 (236) 268-5455</a></p>
-    </section>
-    <section>
-      <h3>Email</h3>
-      <p><a href="mailto:yabulnag@gmail.com">yabulnag@gmail.com</a></p>
-    </section>
-    <section>
-      <h3>Social</h3>
-      <ul class="icons alt">
-        <li><a href="https://www.linkedin.com/in/yassinabulnaga/" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
-        <li><a href="https://github.com/yassinabulnaga" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-      </ul>
-    </section>
-  </section>
-</footer>
+      <!-- Footer -->
+      <footer id="footer">
+        <section class="split contact">
+          <section class="alt"><h3>Address</h3><p>3615 W 17 Ave<br />Vancouver, BC</p></section>
+          <section><h3>Phone</h3><p><a href="tel:+12362685455">+1 (236) 268-5455</a></p></section>
+          <section><h3>Email</h3><p><a href="mailto:yabulnag@gmail.com">yabulnag@gmail.com</a></p></section>
+          <section><h3>Social</h3>
+            <ul class="icons alt">
+              <li><a href="https://www.linkedin.com/in/yassinabulnaga/" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+              <li><a href="https://github.com/yassinabulnaga" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+            </ul>
+          </section>
+        </section>
+      </footer>
 
       <!-- Copyright -->
       <div id="copyright">
         <ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
       </div>
-
     </div>
 
     <!-- Scripts -->
