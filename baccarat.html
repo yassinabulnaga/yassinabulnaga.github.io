@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <title>Resume - Yassin Abulnaga</title>
+    <title>FPGA Baccarat - Yassin Abulnaga</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
@@ -19,9 +19,9 @@
       <nav id="nav">
         <ul class="links">
           <li><a href="index.html">Home</a></li>
-          <li class="active"><a href="resume.html">Resume</a></li>
+          <li><a href="resume.html">Resume</a></li>
           <li><a href="risc-cpu.html">RISC CPU</a></li>
-          <li><a href="baccarat.html">FPGA Baccarat</a></li>
+          <li class="active"><a href="baccarat.html">FPGA Baccarat</a></li>
           <li><a href="coin-robot.html">Coin Retrieval Robot</a></li>
           <li><a href="reflow-oven.html">Oven Reflow Controller</a></li>
         </ul>
@@ -35,13 +35,22 @@
       <div id="main">
         <section class="post">
           <header class="major">
-            <h1>Resume</h1>
+            <h1>FPGA Baccarat</h1>
           </header>
-          <p>You can view or download my resume below:</p>
+          <div class="image main"><img src="images/baccarat-fpga.jpg" alt="FPGA Baccarat Game" /></div>
+          <p>
+            Implemented a **Baccarat casino card game** on the DE1-SoC FPGA board using SystemVerilog. 
+            The project features a finite state machine (FSM) to handle game flow, score calculation, 
+            and result display on HEX displays and LEDs. 
+          </p>
+          <p>
+            Players can place bets, and the system automatically deals cards, evaluates hand values, 
+            and determines the winner according to Baccarat rules. The design integrates memory-mapped I/O 
+            to interact with switches, buttons, LEDs, and 7-segment displays.
+          </p>
           <ul class="actions special">
-            <li><a href="documents/Yassin_Abulnaga_Resume.pdf" class="button large" target="_blank">Download Resume</a></li>
+            <li><a href="https://github.com/yassinabulnaga/fpga-baccarat" class="button large">View on GitHub</a></li>
           </ul>
-          <div class="image main"><img src="images/resume-preview.png" alt="Resume preview" /></div>
         </section>
       </div>
 
@@ -60,6 +69,7 @@
         </section>
       </footer>
 
+      <!-- Copyright -->
       <div id="copyright">
         <ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
       </div>
