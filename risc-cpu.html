@@ -49,7 +49,7 @@
 
           <p style="text-align:center;">
             <img src="images/BlockDiagramCpen211.png" alt="SRM CPU block diagram" style="max-width:900px;width:100%;height:auto;" />
-            <br/><em>High-level block diagram of the SRM CPU (datapath + controller + memory &amp; I/O).</em>
+            <br/><em>High-level block diagram.</em>
           </p>
 
           <!-- Goals -->
@@ -78,11 +78,6 @@
   <li><strong>Program Counter &amp; Instruction Register</strong> — PC increments each fetch (halts on HALT); IR latches the current instruction for decoding.</li>
   <li><strong>Controller FSM</strong> — Sequencer with states for reset, fetch, decode, and execute, asserting control signals to drive the datapath.</li>
 </ul>
-
-          <p style="text-align:center;">
-            <img src="images/srm-datapath.png" alt="Datapath schematic" style="max-width:900px;width:100%;height:auto;" />
-            <br/><em>Datapath core: regfile, shifter, ALU, A/B/C regs, status, and writeback mux.</em>
-          </p>
 
 <h3>Instruction Set</h3>
 <table>
