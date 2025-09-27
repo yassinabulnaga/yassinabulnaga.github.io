@@ -1,126 +1,165 @@
 <!DOCTYPE HTML>
-<!--
-	Massively by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
-	<head>
-		<title>Generic Page - Massively by HTML5 UP</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
+  <head>
+    <title>Coin Retrieval Robot - Yassin Abulnaga</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+  </head>
+  <body class="is-preload">
+    <div id="wrapper" class="fade-in">
 
-		<!-- Wrapper -->
-			<div id="wrapper">
+      <!-- Header -->
+      <header id="header">
+        <a href="index.html" class="logo">About</a>
+      </header>
 
-				<!-- Header -->
-					<header id="header">
-						<a href="index.html" class="logo">Massively</a>
-					</header>
+      <!-- Nav -->
+      <nav id="nav">
+        <ul class="links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="resume.html">Resume</a></li>
+          <li><a href="risc-cpu.html">RISC CPU</a></li>
+          <li><a href="baccarat.html">FPGA Baccarat</a></li>
+          <li class="active"><a href="coin-robot.html">Coin Retrieval Robot</a></li>
+          <li><a href="reflow-oven.html">Oven Reflow Controller</a></li>
+        </ul>
+        <ul class="icons">
+          <li><a href="https://www.linkedin.com/in/yassinabulnaga/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+          <li><a href="https://github.com/yassinabulnaga" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+        </ul>
+      </nav>
 
-				<!-- Nav -->
-					<nav id="nav">
-						<ul class="links">
-							<li><a href="index.html">This is Massively</a></li>
-							<li class="active"><a href="generic.html">Generic Page</a></li>
-							<li><a href="elements.html">Elements Reference</a></li>
-						</ul>
-						<ul class="icons">
-							<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-							<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-							<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-							<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-						</ul>
-					</nav>
+      <!-- Main -->
+      <div id="main">
+        <section class="post">
+          <header class="major">
+            <h1>Coin Retrieval Robot</h1>
+          </header>
 
-				<!-- Main -->
-					<div id="main">
+          <!-- Abstract -->
+          <h2>Abstract</h2>
+          <p>
+            This project, completed for <strong>UBC ELEC291</strong>, involved designing and building a robot that can retrieve metallic coins in both
+            autonomous and manual modes. The manual mode uses a PS2-based wireless remote, while the autonomous mode runs a finite state machine (FSM) for searching, detecting, pickup, and return. 
+          </p>
+          <p style="text-align:center;">
+            <img src="images/coin-robot.jpg" alt="Coin Retrieval Robot" style="max-width:850px; width:100%; height:auto;" />
+          </p>
 
-						<!-- Post -->
-							<section class="post">
-								<header class="major">
-									<span class="date">April 25, 2017</span>
-									<h1>This is a<br />
-									Generic Page</h1>
-									<p>Aenean ornare velit lacus varius enim ullamcorper proin aliquam<br />
-									facilisis ante sed etiam magna interdum congue. Lorem ipsum dolor<br />
-									amet nullam sed etiam veroeros.</p>
-								</header>
-								<div class="image main"><img src="images/pic01.jpg" alt="" /></div>
-								<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur sapien risus, commodo eget turpis at, elementum convallis enim turpis, lorem ipsum dolor sit amet nullam.</p>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus. Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum.</p>
-							</section>
+          <!-- Goals -->
+          <h2>Goals</h2>
+          <ul>
+            <li>Develop a robot capable of locating and retrieving metallic coins.</li>
+            <li>Implement both manual and autonomous operation modes.</li>
+            <li>Enable wireless communication between the robot and a handheld remote.</li>
+            <li>Provide real-time feedback via LCD and audio signals.</li>
+          </ul>
 
-					</div>
+          <!-- System Design -->
+          <h2>System Design</h2>
+          <p>
+            The system is divided into sensing, actuation, control, and communication modules. The robot integrates STM32 (onboard) and PIC32 (remote) microcontrollers, wireless modules, and custom circuitry for detection and actuation.
+          </p>
 
-				<!-- Footer -->
-					<footer id="footer">
-						<section>
-							<form method="post" action="#">
-								<div class="fields">
-									<div class="field">
-										<label for="name">Name</label>
-										<input type="text" name="name" id="name" />
-									</div>
-									<div class="field">
-										<label for="email">Email</label>
-										<input type="text" name="email" id="email" />
-									</div>
-									<div class="field">
-										<label for="message">Message</label>
-										<textarea name="message" id="message" rows="3"></textarea>
-									</div>
-								</div>
-								<ul class="actions">
-									<li><input type="submit" value="Send Message" /></li>
-								</ul>
-							</form>
-						</section>
-						<section class="split contact">
-							<section class="alt">
-								<h3>Address</h3>
-								<p>1234 Somewhere Road #87257<br />
-								Nashville, TN 00000-0000</p>
-							</section>
-							<section>
-								<h3>Phone</h3>
-								<p><a href="#">(000) 000-0000</a></p>
-							</section>
-							<section>
-								<h3>Email</h3>
-								<p><a href="#">info@untitled.tld</a></p>
-							</section>
-							<section>
-								<h3>Social</h3>
-								<ul class="icons alt">
-									<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-									<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-									<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-									<li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-								</ul>
-							</section>
-						</section>
-					</footer>
+          <h3>Hardware Modules</h3>
+          <ul>
+            <li><strong>Colpitts Oscillator</strong> – detects coins via frequency shift.</li>
+            <li><strong>Electromagnet + Servo</strong> – retrieves and drops coins.</li>
+            <li><strong>IR Perimeter Sensors</strong> – prevent escape from the arena.</li>
+            <li><strong>LCD Display</strong> – shows coin count and system status.</li>
+            <li><strong>DC Motors + PWM</strong> – drive and maneuver the robot.</li>
+          </ul>
 
-				<!-- Copyright -->
-					<div id="copyright">
-						<ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
-					</div>
+          <p style="text-align:center;">
+            <img src="https://github.com/user-attachments/assets/398fa3c0-0e3d-4983-94f3-8f0fc204dc6a" alt="Hardware Block Diagram" style="max-width:850px; width:100%; height:auto;" />
+            <br/><em>Hardware block diagram</em>
+          </p>
 
-			</div>
+          <h3>Software Modules</h3>
+          <ul>
+            <li><strong>Finite State Machine</strong> – manages autonomous search and retrieval cycle.</li>
+            <li><strong>Interrupt Service Routines</strong> – ensure responsive motor and sensor control.</li>
+            <li><strong>UART Communication</strong> – facilitates data exchange with the remote.</li>
+          </ul>
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+          <p style="text-align:center;">
+            <img src="https://github.com/user-attachments/assets/5703a347-9a43-423e-9407-53d11dd29174" alt="Software Block Diagram" style="max-width:650px; width:100%; height:auto;" />
+            <br/><em>Software block diagram</em>
+          </p>
 
-	</body>
+          <h3>Remote Controller</h3>
+          <p>
+            Built around a <strong>PIC32MX130F064B</strong>, the handheld controller integrates a PS2 interface, LCD display, speaker, and JDY-40 wireless link for real-time control and telemetry.
+          </p>
+
+          <!-- Results -->
+          <h2>Results</h2>
+          <ul>
+            <li>Achieved 90%+ coin retrieval success across 50+ trials.</li>
+            <li>Reliable perimeter detection above ~2.4 V threshold.</li>
+            <li>Consistent wireless communication at 9600 baud using JDY-40 modules.</li>
+          </ul>
+
+          <p style="text-align:center;">
+            <img src="https://github.com/user-attachments/assets/d24e52ae-01d5-483a-9630-1540a24fbfc6" alt="Oscillator no coin" style="max-width:750px; width:100%; height:auto;" />
+            <br/><em>Colpitts oscillator signal without coin</em>
+          </p>
+          <p style="text-align:center;">
+            <img src="https://github.com/user-attachments/assets/ca66b617-6422-4d3e-9a66-91e76bb94fe8" alt="Oscillator with coin" style="max-width:750px; width:100%; height:auto;" />
+            <br/><em>Colpitts oscillator signal with coin present</em>
+          </p>
+
+          <p>
+            <a href="https://www.youtube.com/watch?v=KWwsTouMKVg" target="_blank" class="button large">Watch Demo on YouTube</a>
+          </p>
+
+          <!-- Acknowledgments -->
+          <h2>Acknowledgments</h2>
+          <p>
+            Group A13, ELEC291 UBC 2025.  
+            Special thanks to Dr. Jesus Calvino-Fraga for project framework and guidance.
+          </p>
+          <ul>
+            <li>Yassin Abulnaga</li>
+            <li>Faris Alshouani</li>
+            <li>Ali Danesh</li>
+            <li>Ronald Feng</li>
+            <li>Drédyn Fontana</li>
+            <li>Nick Unruh</li>
+          </ul>
+        </section>
+      </div>
+
+      <!-- Footer -->
+      <footer id="footer">
+        <section class="split contact">
+          <section class="alt"><h3>Address</h3><p>3615 W 17 Ave<br />Vancouver, BC</p></section>
+          <section><h3>Phone</h3><p><a href="tel:+12362685455">+1 (236) 268-5455</a></p></section>
+          <section><h3>Email</h3><p><a href="mailto:yabulnag@gmail.com">yabulnag@gmail.com</a></p></section>
+          <section><h3>Social</h3>
+            <ul class="icons alt">
+              <li><a href="https://www.linkedin.com/in/yassinabulnaga/" class="icon brands alt fa-linkedin"></a></li>
+              <li><a href="https://github.com/yassinabulnaga" class="icon brands alt fa-github"></a></li>
+            </ul>
+          </section>
+        </section>
+      </footer>
+
+      <!-- Copyright -->
+      <div id="copyright">
+        <ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
 </html>
