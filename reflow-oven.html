@@ -26,8 +26,8 @@
           <li class="active"><a href="reflow-oven.html">Oven Reflow Controller</a></li>
         </ul>
         <ul class="icons">
-          <li><a href="https://www.linkedin.com/in/yassinabulnaga/" class="icon brands fa-linkedin"></a></li>
-          <li><a href="https://github.com/yassinabulnaga" class="icon brands fa-github"></a></li>
+          <li><a href="https://www.linkedin.com/in/yassinabulnaga/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+          <li><a href="https://github.com/yassinabulnaga" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
         </ul>
       </nav>
 
@@ -35,16 +35,104 @@
       <div id="main">
         <section class="post">
           <header class="major">
-            <h1>Oven Reflow Controller</h1>
+            <h1>Reflow Oven Controller — ELEC291/ELEC292</h1>
           </header>
-          <div class="image main"><img src="images/reflow-oven.jpg" alt="Reflow Oven Controller" /></div>
+
+          <!-- Abstract -->
+          <h2>Abstract</h2>
           <p>
-            Designed and programmed a reflow oven controller using the N76E003 microcontroller in Assembly and Python. 
-            Features include a passcode system, FSM-based thermal process, UART visualization, 
-            LCD feedback, and an automated door mechanism driven by a DC motor. 
+            A precision reflow oven controller built on the <strong>N76E003</strong> microcontroller and programmed entirely in assembly. 
+            The system automates the reflow soldering process using a K-type thermocouple (with OP07 signal conditioning) and an SSR to regulate a toaster oven. 
+            It features an LCD UI, passcode lock, live serial logging with a Python dashboard, and an automated door mechanism for rapid cooldown.
           </p>
-          <ul class="actions special">
-            <li><a href="https://github.com/yassinabulnaga/reflow-oven-controller" class="button large">View on GitHub</a></li>
+          <p style="text-align:center;">
+            <img src="https://github.com/user-attachments/assets/1e715722-19a4-454c-bb93-06489d2ab98f" alt="Reflow controller block diagram" style="max-width: 100%; height: auto;" />
+            <br/><em>Figure 1: Hardware–software integration overview.</em>
+          </p>
+
+          <!-- Goals -->
+          <h2>Goals</h2>
+          <ul>
+            <li>Closed-loop temperature control following configurable reflow profiles.</li>
+            <li>±3&nbsp;°C temperature accuracy across the full thermal cycle.</li>
+            <li>Robust, assembly-only firmware with clear FSM stages and fault handling.</li>
+            <li>Operator safety and usability: LCD UI, passcode lock, and automated cooldown door.</li>
+            <li>Real-time data logging and visualization via Python strip chart.</li>
+          </ul>
+
+          <!-- System Design -->
+          <h2>System Design</h2>
+          <p>
+            The controller measures oven temperature via a K-type thermocouple and amplifies/conditions the signal using an <strong>OP07 op-amp</strong> before sampling with the N76E003 ADC. 
+            A <strong>solid-state relay</strong> modulates heater power; the process is governed by an <strong>FSM</strong> that steps through Preheat, Soak, Reflow, Cool Down, Done, and Error. 
+            An LCD and pushbuttons provide a user interface, while UART streaming supports logging/visualization on a host PC.
+          </p>
+
+          <h3>Hardware Modules</h3>
+          <ul>
+            <li><strong>Temperature Sensing:</strong> K-type thermocouple → OP07 gain/offset stage → MCU ADC.</li>
+            <li><strong>Power Control:</strong> SSR driving a toaster oven element (duty-cycle / burst control).</li>
+            <li><strong>User I/O:</strong> 16×2 LCD and pushbuttons for profile selection and status.</li>
+            <li><strong>Door Mechanism:</strong> 12&nbsp;V DC motor opens door at cycle end to accelerate cooldown.</li>
+            <li><strong>Audio:</strong> PWM melody (Super Mario theme) on completion.</li>
+          </ul>
+
+          <div style="text-align:center;">
+            <img src="https://github.com/user-attachments/assets/c5d91ec1-e180-455e-8f39-74904d435ef2" alt="LCD + pushbuttons circuit" style="max-width: 750px; width: 100%; height: auto;" />
+            <br/><em>Figure 2: LCD and pushbutton interface.</em>
+          </div>
+          <br/>
+          <div style="text-align:center;">
+            <img src="https://github.com/user-attachments/assets/45478e6d-a702-4bf3-b6b0-c5189c249926" alt="OP07 op-amp conditioning" style="max-width: 520px; width: 100%; height: auto;" />
+            <br/><em>Figure 3: OP07 conditioning for thermocouple signal.</em>
+          </div>
+
+          <h3>Software Modules</h3>
+          <ul>
+            <li><strong>Finite State Machine:</strong> Rest → Ramp to Soak → Soak → Ramp to Reflow → Reflow → Cool Down → Done (→ Error on faults).</li>
+            <li><strong>Control Loop:</strong> ADC sampling, profile tracking, heater drive (SSR) with thermal safeguards.</li>
+            <li><strong>UI &amp; Security:</strong> LCD updates, passcode lock, button debouncing.</li>
+            <li><strong>Telemetry:</strong> UART streaming for logging and Python strip-chart plotting.</li>
+          </ul>
+
+          <p style="text-align:center;">
+            <img src="https://github.com/user-attachments/assets/15feddde-7cc8-48b1-b33e-bf499a3ad9d0" alt="Reflow process FSM" style="max-width: 600px; width: 100%; height: auto;" />
+            <br/><em>Figure 4: FSM governing the reflow process.</em>
+          </p>
+
+          <!-- Results -->
+          <h2>Results</h2>
+          <ul>
+            <li><strong>Accuracy:</strong> Maintained within ±3&nbsp;°C versus a calibrated Fluke 45 across the cycle.</li>
+            <li><strong>Profile Tracking:</strong> Achieved JEDEC-style preheat/soak/reflow ramps with stable peak.</li>
+            <li><strong>Usability:</strong> Clear LCD status, audible completion, and passcode protection.</li>
+            <li><strong>Cooldown:</strong> Automated door significantly reduced cool-down time and improved safety.</li>
+          </ul>
+
+          <p style="text-align:center;">
+            <img src="https://github.com/user-attachments/assets/422cf2ce-6be6-4980-beab-cd43516ea656" alt="Temperature validation plot" style="max-width: 600px; width: 100%; height: auto;" />
+            <br/><em>Figure 5: Multimeter vs. MCU temperature—error within ±3&nbsp;°C.</em>
+          </p>
+
+          <div style="text-align:center;">
+            <img src="https://github.com/user-attachments/assets/4da63185-be62-4748-bf5e-7425cb74a42d" alt="Soldered EFM8 board" style="max-width: 420px; width: 100%; height: auto; margin-right:12px;" />
+            <img src="https://github.com/user-attachments/assets/497e3043-6556-44a1-a0fb-ef77e2c47c58" alt="Breadboarded FSM" style="max-width: 380px; width: 100%; height: auto;" />
+            <br/><em>Figure 6: (Left) SMD board soldered via controller; (Right) FSM running on breadboard.</em>
+          </div>
+
+          <!-- Acknowledgments -->
+          <h2>Acknowledgments</h2>
+          <p>
+            Developed by <strong>Group A13</strong> for UBC <strong>ELEC291/ELEC292</strong>. 
+            Special thanks to Dr. Jesus Calvino-Fraga for guidance and course framework.
+          </p>
+          <ul>
+            <li>Yassin Abulnaga</li>
+            <li>Faris Alshouani</li>
+            <li>Ali Danesh</li>
+            <li>Ronald Feng</li>
+            <li>Drédyn Fontana</li>
+            <li>Nick Unruh</li>
           </ul>
         </section>
       </div>
@@ -57,13 +145,14 @@
           <section><h3>Email</h3><p><a href="mailto:yabulnag@gmail.com">yabulnag@gmail.com</a></p></section>
           <section><h3>Social</h3>
             <ul class="icons alt">
-              <li><a href="https://www.linkedin.com/in/yassinabulnaga/" class="icon brands alt fa-linkedin"></a></li>
-              <li><a href="https://github.com/yassinabulnaga" class="icon brands alt fa-github"></a></li>
+              <li><a href="https://www.linkedin.com/in/yassinabulnaga/" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+              <li><a href="https://github.com/yassinabulnaga" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
             </ul>
           </section>
         </section>
       </footer>
 
+      <!-- Copyright -->
       <div id="copyright">
         <ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
       </div>
