@@ -35,15 +35,15 @@
       <div id="main">
         <section class="post">
           <header class="major">
-            <h1>Reflow Oven Controller — ELEC291/ELEC292</h1>
+            <h1>Reflow Oven Controller</h1>
           </header>
 
           <!-- Abstract -->
           <h2>Abstract</h2>
           <p>
             A precision reflow oven controller built on the <strong>N76E003</strong> microcontroller and programmed entirely in assembly. 
-            The system automates the reflow soldering process using a K-type thermocouple (with OP07 signal conditioning) and an SSR to regulate a toaster oven. 
-            It features an LCD UI, passcode lock, live serial logging with a Python dashboard, and an automated door mechanism for rapid cooldown.
+            The system automates the reflow soldering process using a K-type thermocouple and an SSR to regulate a toaster oven. 
+            It features an LCD UI, passcode lock, live serial logging with a Python dashboard.
           </p>
           <p style="text-align:center;">
             <img src="https://github.com/user-attachments/assets/1e715722-19a4-454c-bb93-06489d2ab98f" alt="Reflow controller block diagram" style="max-width: 100%; height: auto;" />
@@ -73,7 +73,6 @@
             <li><strong>Temperature Sensing:</strong> K-type thermocouple → OP07 gain/offset stage → MCU ADC.</li>
             <li><strong>Power Control:</strong> SSR driving a toaster oven element (duty-cycle / burst control).</li>
             <li><strong>User I/O:</strong> 16×2 LCD and pushbuttons for profile selection and status.</li>
-            <li><strong>Door Mechanism:</strong> 12&nbsp;V DC motor opens door at cycle end to accelerate cooldown.</li>
             <li><strong>Audio:</strong> PWM melody (Super Mario theme) on completion.</li>
           </ul>
 
@@ -89,7 +88,7 @@
 
           <h3>Software Modules</h3>
           <ul>
-            <li><strong>Finite State Machine:</strong> Rest → Ramp to Soak → Soak → Ramp to Reflow → Reflow → Cool Down → Done (→ Error on faults).</li>
+            <li><strong>Finite State Machine:</strong> Rest → Ramp to Soak → Soak → Ramp to Reflow → Reflow → Cool Down → Done.</li>
             <li><strong>Control Loop:</strong> ADC sampling, profile tracking, heater drive (SSR) with thermal safeguards.</li>
             <li><strong>UI &amp; Security:</strong> LCD updates, passcode lock, button debouncing.</li>
             <li><strong>Telemetry:</strong> UART streaming for logging and Python strip-chart plotting.</li>
@@ -117,23 +116,15 @@
           <div style="text-align:center;">
             <img src="https://github.com/user-attachments/assets/4da63185-be62-4748-bf5e-7425cb74a42d" alt="Soldered EFM8 board" style="max-width: 420px; width: 100%; height: auto; margin-right:12px;" />
             <img src="https://github.com/user-attachments/assets/497e3043-6556-44a1-a0fb-ef77e2c47c58" alt="Breadboarded FSM" style="max-width: 380px; width: 100%; height: auto;" />
-            <br/><em>Figure 6: (Left) SMD board soldered via controller; (Right) FSM running on breadboard.</em>
+            <br/><em>Figure 6: (Left) FSM running on breadboard; (Right) SMD board soldered via controller.</em>
           </div>
 
           <!-- Acknowledgments -->
           <h2>Acknowledgments</h2>
           <p>
-            Developed by <strong>Group A13</strong> for UBC <strong>ELEC291/ELEC292</strong>. 
-            Special thanks to Dr. Jesus Calvino-Fraga for guidance and course framework.
+            Developed by <strong>Group A13</strong> for UBC <strong>ELEC291</strong>. 
+            Special thanks to Dr. Jesus Calvino-Fraga for guidance.
           </p>
-          <ul>
-            <li>Yassin Abulnaga</li>
-            <li>Faris Alshouani</li>
-            <li>Ali Danesh</li>
-            <li>Ronald Feng</li>
-            <li>Drédyn Fontana</li>
-            <li>Nick Unruh</li>
-          </ul>
         </section>
       </div>
 
