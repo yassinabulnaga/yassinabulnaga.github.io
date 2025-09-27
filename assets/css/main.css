@@ -4687,3 +4687,14 @@ input, select, textarea {
 		}
 
 	}
+	/* Optional: browser-like zoom (non-standard) */
+html { zoom: 0.7; }
+
+/* Fallback for browsers that don't support zoom */
+@supports not (zoom: 1) {
+  body { 
+    transform: scale(0.7);
+    transform-origin: top left;
+    width: calc(100% / 0.7); /* prevent right-side cutoff */
+  }
+}
