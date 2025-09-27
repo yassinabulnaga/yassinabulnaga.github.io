@@ -74,32 +74,75 @@
           </p>
 
           <h3>Modules</h3>
-          <ul>
-            <li><strong>Register File (8×16)</strong> — single read port, single write port, load-enabled registers R0–R7; combinational reads.</li>
-            <li><strong>ALU</strong> — 16-bit <code>ADD</code>, <code>SUB</code>(via CMP), <code>AND</code>, <code>MVN</code> with Z/N/V flags; purely combinational.</li>
-            <li><strong>Shifter</strong> — LSL#1, LSR#1, ASR#1 applied to the B operand pre-ALU.</li>
-            <li><strong>Pipeline Registers</strong> — A, B, C (load-enable) capture operands and ALU result; <em>Status</em> holds Z/N/V.</li>
-            <li><strong>Writeback Mux</strong> — selects one of {C, sign-extended imm8, mdata, PC} to write into the register file.</li>
-            <li><strong>Instruction Register (IR)</strong> — 16-bit latch of the current instruction; feeds decoder.</li>
-            <li><strong>Program Counter (PC)</strong> — 8-bit, load-enable; increments each fetch (HALT freezes PC).</li>
-            <li><strong>Instruction Memory (RAM)</strong> — 256×16, synchronous read; initialized from <code>data.txt</code>.</li>
-            <li><strong>Memory Interface</strong> — address mux (<code>addr_sel</code>), <code>mem_cmd</code> (MNONE/MREAD/MWRITE), read/write data buses.</li>
-            <li><strong>Memory-Mapped I/O</strong> — <code>0x0140</code> for switches (read), <code>0x0100</code> for red LEDs (write).</li>
-            <li><strong>Controller FSM</strong> — states for RST, IF1, IF2, UpdatePC, Decode, Execute micro-steps per instruction.</li>
-          </ul>
+<ul>
+  <li><strong>Datapath</strong> — Includes the register file (8×16), ALU (ADD, AND, MVN, CMP), shifter (LSL/LSR/ASR#1), pipeline registers (A, B, C, Status), and memory subsystem (instruction RAM, data memory, memory-mapped I/O for switches/LEDs). Handles storage, computation, and I/O.</li>
+  <li><strong>Program Counter &amp; Instruction Register</strong> — PC increments each fetch (halts on HALT); IR latches the current instruction for decoding.</li>
+  <li><strong>Controller FSM</strong> — Sequencer with states for reset, fetch, decode, and execute, asserting control signals to drive the datapath.</li>
+</ul>
 
           <p style="text-align:center;">
             <img src="images/srm-datapath.png" alt="Datapath schematic" style="max-width:900px;width:100%;height:auto;" />
             <br/><em>Datapath core: regfile, shifter, ALU, A/B/C regs, status, and writeback mux.</em>
           </p>
 
-          <h3>Instruction Set (implemented)</h3>
-          <ul>
-            <li><strong>MOV Rn,#imm8</strong> (sign-extended); <strong>MOV Rd,Rm{,<span style="white-space:nowrap;">LSL/LSR/ASR#1</span>}</strong></li>
-            <li><strong>ADD Rd,Rn,Rm{,shift}</strong>, <strong>AND Rd,Rn,Rm{,shift}</strong>, <strong>MVN Rd,Rm{,shift}</strong>, <strong>CMP Rn,Rm{,shift}</strong> (sets Z/N/V)</li>
-            <li><strong>LDR Rd,[Rn{,#imm5}]</strong>, <strong>STR Rd,[Rn{,#imm5}]</strong> (data memory &amp; memory-mapped I/O)</li>
-            <li><strong>HALT</strong> (enters halt state; PC stops incrementing)</li>
-          </ul>
+<h3>Instruction Set</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Instruction</th>
+      <th>Meaning</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>MOV Rd,#imm8</code></td>
+      <td>Move immediate to register</td>
+      <td>Sign-extends 8-bit immediate</td>
+    </tr>
+    <tr>
+      <td><code>MOV Rd,Rm{,shift}</code></td>
+      <td>Move register</td>
+      <td>Optional LSL/LSR/ASR by 1</td>
+    </tr>
+    <tr>
+      <td><code>ADD Rd,Rn,Rm{,shift}</code></td>
+      <td>Add</td>
+      <td>Writes result, sets flags</td>
+    </tr>
+    <tr>
+      <td><code>AND Rd,Rn,Rm{,shift}</code></td>
+      <td>Bitwise AND</td>
+      <td>Writes result, sets flags</td>
+    </tr>
+    <tr>
+      <td><code>MVN Rd,Rm{,shift}</code></td>
+      <td>Bitwise NOT</td>
+      <td>Writes result, sets flags</td>
+    </tr>
+    <tr>
+      <td><code>CMP Rn,Rm{,shift}</code></td>
+      <td>Compare</td>
+      <td>Subtracts, updates flags only</td>
+    </tr>
+    <tr>
+      <td><code>LDR Rd,[Rn{,#imm5}]</code></td>
+      <td>Load word</td>
+      <td>Loads from memory/I/O into register</td>
+    </tr>
+    <tr>
+      <td><code>STR Rd,[Rn{,#imm5}]</code></td>
+      <td>Store word</td>
+      <td>Stores register into memory/I/O</td>
+    </tr>
+    <tr>
+      <td><code>HALT</code></td>
+      <td>Stop execution</td>
+      <td>PC freezes, CPU idle</td>
+    </tr>
+  </tbody>
+</table>
+
 
           <h3>Verification</h3>
           <ul>
@@ -117,17 +160,10 @@
           <h2>Results</h2>
           <ul>
             <li>CPU successfully runs programs from on-chip RAM; HALT supported.</li>
-            <li>All core instructions verified in simulation; memory-mapped I/O demo mirrors switches to LEDs (with shift/logic transform).</li>
+            <li>All core instructions verified in simulation.</li>
             <li>Stable on hardware (DE1-SoC): correct HEX/LED outputs, deterministic stepping, clean reset/idle behavior.</li>
-            <li>Clean synthesis: no inferred latches; modular hierarchy (DP.REGFILE.R0–R7) for easy introspection.</li>
+            <li>Clean synthesis.</li>
           </ul>
-
-          <!-- Acknowledgments -->
-          <h2>Acknowledgments</h2>
-          <p>
-            Thanks to the UBC ECE community for guidelines and reference workflows. This page presents the work as a
-            personal project; all RTL, testbenches, and demo integration were implemented and adapted by me.
-          </p>
 
           <!-- Optional: Repo / Docs buttons -->
           <!--
