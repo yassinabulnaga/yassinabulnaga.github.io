@@ -35,23 +35,20 @@
       <div id="main">
         <section class="post">
           <header class="major">
-            <h1>16-bit Simple RISC Machine (SRM)</h1>
-            <p style="margin-top:.5rem">Personal project: RTL design, verification, and on-board bring-up on DE1-SoC</p>
+            <h1>16-bit RISC CPU</h1>
           </header>
 
           <!-- Abstract -->
           <h2>Abstract</h2>
           <p>
             I designed and implemented a minimalist 16-bit RISC CPU in SystemVerilog, including a clean
-            datapath, a finite-state machine (FSM) controller, an instruction memory with PC &amp; IR,
-            and memory-mapped I/O for switches/LEDs. The processor executes a small but expressive ISA
-            (MOV, ADD, AND, MVN, CMP, LDR, STR, HALT) with single-cycle register moves and multi-cycle ALU
-            and memory ops. The design was verified in ModelSim with self-checking testbenches and
-            deployed on a DE1-SoC board via Quartus.
+            datapath,FSM controller, an instruction memory with PC &amp; IR,
+            and memory-mapped I/O for switches/LEDs. The processor executes an ISA with single-cycle register moves 
+            and multi-cycle ALU and memory ops.
           </p>
 
           <p style="text-align:center;">
-            <img src="images/srm-block-diagram.png" alt="SRM CPU block diagram" style="max-width:900px;width:100%;height:auto;" />
+            <img src="images/BlockDiagramCpen211.png" alt="SRM CPU block diagram" style="max-width:900px;width:100%;height:auto;" />
             <br/><em>High-level block diagram of the SRM CPU (datapath + controller + memory &amp; I/O).</em>
           </p>
 
@@ -65,13 +62,15 @@
             <li>Create self-checking testbenches (unit + top) and validate post-synthesis behavior.</li>
           </ul>
 
-          <!-- System Design -->
-          <h2>System Design</h2>
-          <p>
-            The SRM uses a classic split: a <strong>datapath</strong> for storage/compute and an <strong>FSM controller</strong> that
-            asserts control signals each cycle. Instruction fetch is synchronous from on-chip RAM; decode fields
-            drive muxes and ALUop; results write back through a 4-way mux.
-          </p>
+       <!-- System Design -->
+<h2>System Design</h2>
+<p>
+  A 16-bit CPU built around two main components: a <strong>datapath</strong> that performs
+  computation and stores intermediate values, and a <strong>controller FSM</strong> that sequences instruction
+  execution. Instructions are fetched from on-chip RAM into an instruction register, decoded, and then executed
+  by the datapath. Results are written back to memory, with memory-mapped I/O providing
+  interaction with switches and LEDs on the DE1-SoC board.
+</p>
 
           <h3>Modules</h3>
 <ul>
