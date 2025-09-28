@@ -4698,3 +4698,29 @@ html { zoom: 0.7; }
     width: calc(100% / 0.7); /* prevent right-side cutoff */
   }
 }
+/* Resume PDF embed */
+.pdf-container{
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 220px); /* header + top margin space; tweak as needed */
+  max-height: 1200px;
+  background: #fff;             /* hide the theme gradient behind the PDF */
+  border-radius: 0.5rem;
+  overflow: hidden;             /* removes inner scrollbars edge bleed */
+  box-shadow: 0 8px 24px rgba(0,0,0,.12);
+}
+.pdf-container iframe{
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Tighten the page width on big screens so the PDF feels centered */
+.post .pdf-container{
+  margin-top: 1rem;
+}
+
+/* Mobile: give it more vertical room and avoid double scrollbars */
+@media (max-width: 980px){
+  .pdf-container{ height: 85vh; }
+}
