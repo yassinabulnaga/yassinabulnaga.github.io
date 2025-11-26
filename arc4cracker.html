@@ -1,0 +1,183 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Quad-Core ARC4 Cracker — Yassin Abulnaga</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+  </head>
+  <body class="is-preload">
+    <div id="wrapper" class="fade-in">
+
+      <!-- Header -->
+      <header id="header">
+        <a href="index.html" class="logo">About</a>
+      </header>
+
+      <!-- Nav -->
+      <nav id="nav">
+        <ul class="links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="resume.html">Resume</a></li>
+          <li><a href="risc-cpu.html">RISC CPU</a></li>
+          <li class="active"><a href="arc4cracker.html">Quad-Core ARC4 Cracker</a></li>
+          <li><a href="baccarat.html">FPGA Baccarat</a></li>
+          <li><a href="coin-robot.html">Coin Retrieval Robot</a></li>
+          <li><a href="reflow-oven.html">Oven Reflow Controller</a></li>
+        </ul>
+        <ul class="icons">
+          <li><a href="https://www.linkedin.com/in/yassinabulnaga/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+          <li><a href="https://github.com/yassinabulnaga" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+        </ul>
+      </nav>
+
+      <!-- Main -->
+      <div id="main">
+        <section class="post">
+          <header class="major">
+            <h1>Quad-Core ARC4 Cracker</h1>
+          </header>
+
+          <!-- Abstract -->
+          <h2>Abstract</h2>
+          <p>
+            I built a quad-core ARC4 brute-force accelerator on the DE1-SoC to recover unknown
+            24-bit keys from encrypted length-prefixed strings. Each core implements ARC4’s
+            key-scheduling (KSA) and pseudo-random generation (PRGA) in hardware, while a
+            top-level controller manages key assignment, early-exit on success, and storage of
+            candidate plaintexts in on-chip M10K memories.
+          </p>
+
+          <p style="text-align:center;">
+            <img src="images/Arc_BD.jpg" alt="Quad-core ARC4 cracking engine block diagram" style="max-width:900px;width:100%;height:auto;" />
+            <br/><em>High-level block diagram: controller, quad crack engine, and CT/PT M10K memories.</em>
+          </p>
+
+          <!-- Goals -->
+          <h2>Goals</h2>
+          <ul>
+            <li>Implement a cycle-accurate ARC4 KSA and PRGA engine in SystemVerilog.</li>
+            <li>Scale to a quad-core architecture with strided keyspace partitioning.</li>
+            <li>Use early-reject checks on the decrypted prefix to reduce average cycles per key.</li>
+            <li>Store ciphertext and candidate plaintext in M10K memories for inspection in ModelSim.</li>
+            <li>Validate behaviour with self-checking testbenches and waveform analysis.</li>
+          </ul>
+
+          <!-- Architecture -->
+          <h2>Architecture</h2>
+          <p>
+            The design is organized around a <strong>Quad Crack Engine</strong> that instantiates four identical
+            ARC4 cores. Ciphertext bytes are stored in a dedicated <strong>CT M10K</strong>, while decrypted bytes
+            from the winning key are written into a <strong>PT M10K</strong>. A <strong>controller</strong> sequences the search:
+            it seeds each core with a unique starting key, advances keys in a strided pattern, and
+            asserts a global stop when any core reports a match.
+          </p>
+
+          <h3>Modules</h3>
+          <ul>
+            <li><strong>ARC4 Core</strong> — Implements 256-byte S-box, full KSA, and PRGA. For each key, it
+              decrypts a prefix of the ciphertext, applies length and ASCII checks, and signals a
+              candidate hit if the plaintext looks valid.</li>
+            <li><strong>Quad Crack Engine</strong> — Wraps four cores and distributes keys using a strided
+              scheme (core <em>i</em> searches keys <code>start + i, start + i + 4, ...</code>). Aggregates hit
+              signals and key candidates from each core.</li>
+            <li><strong>Controller</strong> — Tracks search progress, captures the first valid key, and
+              switches the PT M10K into “write” mode so the complete plaintext can be stored for
+              inspection.</li>
+            <li><strong>CT / PT M10K Memories</strong> — On-chip memories that hold the ciphertext and the
+              decrypted plaintext produced by the winning key. These are instantiated via the
+              Quartus megafunction wizard.</li>
+          </ul>
+
+          <!-- KSA verification -->
+          <h2>KSA Verification</h2>
+          <p>
+            I first verified the ARC4 key-scheduling algorithm in isolation using a dedicated
+            testbench. The testbench compares the S-box contents after KSA against a known-good
+            reference vector and raises an error counter if any entry mismatches.
+          </p>
+
+          <p style="text-align:center;">
+            <img src="images/KSA_Waveform_SS.png" alt="ModelSim waveform of ARC4 KSA testbench" style="max-width:1000px;width:100%;height:auto;" />
+            <br/><em>ModelSim waveform for the KSA testbench: address, read/write data, index, and error counter.</em>
+          </p>
+
+          <p>
+            The waveform shows the core stepping through all 256 entries of the S-box, performing
+            the key-dependent swaps, and ending with <code>errors = 0</code>, confirming that the hardware KSA
+            matches the software reference.
+          </p>
+
+          <!-- Task 2 memory after KSA -->
+          <h2>Task 2: S-Box Memory After KSA</h2>
+          <p>
+            After validating timing and control in the waveform, I inspected the S-box contents
+            directly using the ModelSim memory viewer. The screenshot below shows the final S-box
+            state in the underlying <code>altsyncram</code> instance after KSA completes.
+          </p>
+
+          <p style="text-align:center;">
+            <img src="images/T2_MEM_SS.png" alt="Memory dump of S-box contents after KSA" style="max-width:1000px;width:100%;height:auto;" />
+            <br/><em>Memory dump of the 256-byte S-box after KSA, matching the expected ARC4 permutation.</em>
+          </p>
+
+          <p>
+            These values match the known-good S-box for the test key, giving a strong sanity check
+            on both the KSA implementation and the M10K memory wiring.
+          </p>
+
+          <!-- Verification -->
+          <h2>Full-System Verification</h2>
+          <ul>
+            <li><strong>Core-level tests</strong> for KSA and PRGA against software reference outputs.</li>
+            <li><strong>End-to-end cracking testbench</strong> that loads a ciphertext, sweeps a configured
+              key range, and checks that the recovered key and plaintext match the ground truth.</li>
+            <li><strong>Quad-core tests</strong> that confirm correct strided key assignment, priority
+              selection when multiple cores hit, and global early-stop behaviour.</li>
+          </ul>
+
+          <!-- Results -->
+          <h2>Results</h2>
+          <ul>
+            <li>The quad-core engine successfully recovers the unknown 24-bit key and decrypts the
+              target plaintext on the DE1-SoC.</li>
+            <li>Strided key distribution and early-reject checks significantly reduce average cycles
+              per key compared to a naive single-core design.</li>
+            <li>CT and PT M10K memories make it easy to inspect ARC4 state and decrypted output
+              directly in ModelSim.</li>
+          </ul>
+        </section>
+      </div>
+
+      <!-- Footer -->
+      <footer id="footer">
+        <section class="split contact">
+          <section class="alt"><h3>Address</h3><p>3615 W 17 Ave<br />Vancouver, BC</p></section>
+          <section><h3>Phone</h3><p><a href="tel:+12362685455">+1 (236) 268-5455</a></p></section>
+          <section><h3>Email</h3><p><a href="mailto:yabulnag@gmail.com">yabulnag@gmail.com</a></p></section>
+          <section><h3>Social</h3>
+            <ul class="icons alt">
+              <li><a href="https://www.linkedin.com/in/yassinabulnaga/" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+              <li><a href="https://github.com/yassinabulnaga" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+            </ul>
+          </section>
+        </section>
+      </footer>
+
+      <!-- Copyright -->
+      <div id="copyright">
+        <ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>
