@@ -1,0 +1,330 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Systolic Array Matrix Multiplier - Yassin Abulnaga</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+  </head>
+  <body class="is-preload">
+    <div id="wrapper" class="fade-in">
+
+      <!-- Header -->
+      <header id="header">
+        <a href="index.html" class="logo">About</a>
+      </header>
+
+      <!-- Nav -->
+      <nav id="nav">
+        <ul class="links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="resume.html">Resume</a></li>
+          <li><a href="risc-cpu.html">RISC CPU</a></li>
+          <li class="active"><a href="systolic-array.html">Systolic Array Matrix Multiplier</a></li>
+          <li><a href="baccarat.html">FPGA Baccarat</a></li>
+          <li><a href="coin-robot.html">Coin Retrieval Robot</a></li>
+          <li><a href="reflow-oven.html">Oven Reflow Controller</a></li>
+        </ul>
+        <ul class="icons">
+          <li><a href="https://www.linkedin.com/in/yassinabulnaga/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+          <li><a href="https://github.com/yassinabulnaga" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+        </ul>
+      </nav>
+
+      <!-- Main -->
+      <div id="main">
+        <section class="post">
+          <header class="major">
+            <h1>Systolic Array Matrix Multiplier</h1>
+            <p>High-Performance Hardware Accelerator for 16×16 Matrix Multiplication</p>
+          </header>
+
+          <!-- Abstract -->
+          <h2>Abstract</h2>
+          <p>
+            I designed and implemented a <strong>16×16 systolic array matrix multiplier</strong> in SystemVerilog 
+            for the DE1-SoC FPGA (Cyclone V). The design features 256 parallel processing elements (PEs) that 
+            compute 16×16 signed 8-bit matrix multiplications with 32-bit accumulation. The accelerator achieves 
+            a compute phase latency of <strong>920 ns (46 clock cycles at 50 MHz)</strong>, delivering 
+            <strong>4.45 GMAC/s throughput</strong> and performing <strong>~3,000x faster than naive Python</strong> 
+            and <strong>~20x faster than naive C</strong> for the same operation. The complete end-to-end operation 
+            (load + compute + store) executes in 11.2 µs, enabling 89,000 matrix multiplications per second.
+          </p>
+
+          <p style="text-align:center;">
+            <img src="images/BD_MM2.jpg" alt="Systolic array matrix multiplier block diagram" style="max-width:900px;width:100%;height:auto;" />
+            <br/><em>High-level block diagram showing the systolic array, BRAMs, and control FSM.</em>
+          </p>
+
+          <!-- Goals -->
+          <h2>Project Goals</h2>
+          <ul>
+            <li>Design a <strong>fully functional 16×16 systolic array</strong> with parallel processing elements</li>
+            <li>Implement efficient <strong>single-port BRAM interfaces</strong> compatible with Quartus In-System Memory Content Editor</li>
+            <li>Achieve <strong>verified correctness</strong> through comprehensive testing with identity matrices and random test vectors</li>
+            <li>Optimize for <strong>minimal latency</strong> in the compute phase while maintaining clean synthesis</li>
+            <li>Measure and document <strong>real hardware performance</strong> using SignalTap II Logic Analyzer</li>
+          </ul>
+
+          <!-- System Architecture -->
+          <h2>System Architecture</h2>
+
+          <h3>Processing Element (PE) Design</h3>
+          <p>
+            Each PE is a multiply-accumulate (MAC) unit that:
+          </p>
+          <ul>
+            <li>Receives 8-bit signed inputs (in_a from west, in_b from north)</li>
+            <li>Performs signed multiplication using logic elements (not DSP blocks for resource efficiency)</li>
+            <li>Accumulates products in a 32-bit register to prevent overflow</li>
+            <li>Forwards inputs to adjacent PEs (out_a to east, out_b to south)</li>
+            <li>Controlled by a global <code>process</code> signal for synchronized operation</li>
+          </ul>
+
+          <h3>Systolic Array (16×16 Mesh)</h3>
+          <p>
+            The 256 PEs are arranged in a 16×16 grid with:
+          </p>
+          <ul>
+            <li><strong>Wave-front propagation:</strong> Input data skewed by row/column for proper alignment</li>
+            <li><strong>Parallel execution:</strong> All 256 PEs compute simultaneously each cycle</li>
+            <li><strong>Efficient dataflow:</strong> Each element used exactly once, no redundant memory accesses</li>
+            <li><strong>Latency:</strong> 3N−2 = 46 cycles for N=16 (theoretical minimum for systolic arrays)</li>
+          </ul>
+
+          <h3>Memory Architecture</h3>
+          <p>
+            Three single-port BRAMs provide data storage:
+          </p>
+          <ul>
+            <li><strong>BRAM A (8-bit × 256):</strong> Stores matrix A in row-major order</li>
+            <li><strong>BRAM B (8-bit × 256):</strong> Stores matrix B in row-major order</li>
+            <li><strong>BRAM C (32-bit × 256):</strong> Stores result matrix C with full 32-bit precision</li>
+            <li><strong>Address mapping:</strong> addr = row × 16 + col for consistent indexing</li>
+            <li><strong>In-System Memory Content Editor compatible:</strong> Allows runtime matrix loading via JTAG</li>
+          </ul>
+
+          <h3>Control FSM</h3>
+          <p>
+            A finite state machine orchestrates the computation pipeline:
+          </p>
+          <ul>
+            <li><strong>IDLE:</strong> Waits for start signal from user (KEY[3] press)</li>
+            <li><strong>LOAD_MATRICES:</strong> Reads 256 elements each from BRAM A and B into internal registers (256 cycles)</li>
+            <li><strong>COMPUTE:</strong> Triggers systolic array computation (46 cycles)</li>
+            <li><strong>STORE_RESULT:</strong> Writes 256 output elements to BRAM C (256 cycles)</li>
+            <li><strong>Done signal:</strong> Indicates completion and readiness for next operation</li>
+          </ul>
+
+          <!-- Implementation Challenges -->
+          <h2>Implementation Challenges & Solutions</h2>
+
+          <h3>Challenge 1: BRAM Load/Store Off-By-One Errors</h3>
+          <p>
+            <strong>Problem:</strong> Initial implementation had a 9-bit counter that would wrap from 255→256→0, 
+            causing address 0 to be read twice and creating duplicate accumulations.
+          </p>
+          <p>
+            <strong>Solution:</strong> Added address guards (<code>if (addr_cnt_q < ADDR_MAX)</code>) to prevent 
+            truncation and carefully sequenced the FSM transitions to capture all 256 addresses exactly once, 
+            accounting for BRAM's 1-cycle read latency.
+          </p>
+
+          <h3>Challenge 2: Systolic Array Timing Bug</h3>
+          <p>
+            <strong>Problem:</strong> The <code>process</code> signal stayed high for 47 cycles instead of 46, 
+            causing PE[0][0] to perform one extra MAC operation with valid data, resulting in C[0][0] being 
+            off by the last multiplication term (-4374 in test case).
+          </p>
+          <p>
+            <strong>Solution:</strong> Fixed control logic to deassert <code>process</code> at 
+            <code>counter_q == MULT_CYCLES</code> instead of <code>MULT_CYCLES + 1</code>, ensuring exactly 
+            46 MAC operations per PE.
+          </p>
+
+          <h3>Challenge 3: DSP Block Resource Constraints</h3>
+          <p>
+            <strong>Problem:</strong> 256 PEs × 1 multiplier each = 256 DSP blocks required, but DE1-SoC only has 87.
+          </p>
+          <p>
+            <strong>Solution:</strong> Added <code>(* multstyle = "logic" *)</code> attribute to force Quartus 
+            to implement multipliers in logic elements instead of DSP blocks, trading speed for resource availability. 
+            Design uses ~40K logic elements but fits within FPGA constraints.
+          </p>
+
+          <!-- Verification & Testing -->
+          <h2>Verification & Testing</h2>
+
+          <h3>Functional Verification</h3>
+          <ul>
+            <li><strong>Identity Matrix Test:</strong> A × I = A for all 256 elements ✓</li>
+            <li><strong>Random Matrix Test:</strong> Compared against NumPy reference implementation, 255/256 correct, 
+                with remaining error traced to timing bug</li>
+            <li><strong>Boundary Conditions:</strong> Tested diagonal elements, corners, and overflow scenarios</li>
+            <li><strong>Data Integrity:</strong> Verified row-major storage format and address decoding logic</li>
+          </ul>
+
+          <h3>Hardware Validation</h3>
+          <ul>
+            <li><strong>SignalTap II Logic Analyzer:</strong> Measured compute phase latency from <code>in_valid</code> 
+                to <code>out_valid</code></li>
+            <li><strong>In-System Memory Content Editor:</strong> Loaded test matrices and read results in real-time</li>
+            <li><strong>FSM State Monitoring:</strong> Confirmed proper state transitions and cycle counts</li>
+            <li><strong>Synthesis Reports:</strong> Verified resource usage and timing constraints</li>
+          </ul>
+
+          <!-- Performance Results -->
+          <h2>Performance Results</h2>
+
+          <h3>Measured Hardware Performance</h3>
+          <table style="width:100%; border-collapse:collapse; margin:20px 0;">
+            <tr style="background:#2e3842; color:#fff;">
+              <th style="padding:10px; text-align:left;">Metric</th>
+              <th style="padding:10px; text-align:right;">Value</th>
+            </tr>
+            <tr style="background:#f5f5f5;">
+              <td style="padding:10px;">Clock Frequency</td>
+              <td style="padding:10px; text-align:right;">50 MHz</td>
+            </tr>
+            <tr>
+              <td style="padding:10px;">Compute Phase Latency</td>
+              <td style="padding:10px; text-align:right;"><strong>920 ns (46 cycles)</strong></td>
+            </tr>
+            <tr style="background:#f5f5f5;">
+              <td style="padding:10px;">Total Operation Time (Load+Compute+Store)</td>
+              <td style="padding:10px; text-align:right;">11.2 µs (560 cycles)</td>
+            </tr>
+            <tr>
+              <td style="padding:10px;">Throughput</td>
+              <td style="padding:10px; text-align:right;"><strong>4.45 GMAC/s</strong></td>
+            </tr>
+            <tr style="background:#f5f5f5;">
+              <td style="padding:10px;">Operations per Cycle</td>
+              <td style="padding:10px; text-align:right;">89 MACs/cycle (256 PEs active)</td>
+            </tr>
+            <tr>
+              <td style="padding:10px;">Matrix Multiplications per Second</td>
+              <td style="padding:10px; text-align:right;">89,285</td>
+            </tr>
+          </table>
+
+          <h3>Performance Comparison (Compute-Only)</h3>
+          <table style="width:100%; border-collapse:collapse; margin:20px 0;">
+            <tr style="background:#2e3842; color:#fff;">
+              <th style="padding:10px; text-align:left;">Implementation</th>
+              <th style="padding:10px; text-align:right;">Time</th>
+              <th style="padding:10px; text-align:right;">Speedup vs FPGA</th>
+            </tr>
+            <tr style="background:#f5f5f5;">
+              <td style="padding:10px;"><strong>This FPGA (50 MHz)</strong></td>
+              <td style="padding:10px; text-align:right;"><strong>920 ns</strong></td>
+              <td style="padding:10px; text-align:right;"><strong>1.0× (baseline)</strong></td>
+            </tr>
+            <tr>
+              <td style="padding:10px;">Python Naive Triple Loop</td>
+              <td style="padding:10px; text-align:right;">~2.7 ms</td>
+              <td style="padding:10px; text-align:right;"><strong>0.0003× (2,985× slower)</strong></td>
+            </tr>
+            <tr style="background:#f5f5f5;">
+              <td style="padding:10px;">C Naive Loop (gcc -O0)</td>
+              <td style="padding:10px; text-align:right;">~20 µs</td>
+              <td style="padding:10px; text-align:right;">0.046× (22× slower)</td>
+            </tr>
+            <tr>
+              <td style="padding:10px;">C Optimized (gcc -O3)</td>
+              <td style="padding:10px; text-align:right;">~2 µs</td>
+              <td style="padding:10px; text-align:right;">0.46× (2× slower)</td>
+            </tr>
+            <tr style="background:#f5f5f5;">
+              <td style="padding:10px;">NumPy (Optimized BLAS/SIMD)</td>
+              <td style="padding:10px; text-align:right;">~1.3 µs</td>
+              <td style="padding:10px; text-align:right;">1.4× (faster due to cache/AVX512)</td>
+            </tr>
+          </table>
+
+          <h3>Resource Utilization</h3>
+          <ul>
+            <li><strong>Logic Elements:</strong> ~40,000 / 85,000 (47%)</li>
+            <li><strong>DSP Blocks:</strong> 0 / 87 (multipliers in logic)</li>
+            <li><strong>M10K Memory Blocks:</strong> 3 / 312 (1%)</li>
+            <li><strong>Registers:</strong> ~15,000</li>
+            <li><strong>Power:</strong> Estimated 1-2W (vs 50W typical CPU)</li>
+          </ul>
+
+          <!-- Key Insights -->
+          <h2>Key Insights</h2>
+          <ul>
+            <li><strong>Massive Parallelism:</strong> 256 PEs executing simultaneously provides orders of magnitude 
+                speedup over sequential CPU code</li>
+            <li><strong>Deterministic Latency:</strong> Always exactly 46 cycles, no cache misses or branch mispredictions</li>
+            <li><strong>Resource Trade-offs:</strong> Using logic for multipliers instead of DSP blocks enabled fitting 
+                256 PEs on a mid-range FPGA</li>
+            <li><strong>Memory Bandwidth:</strong> Single-port BRAMs limit throughput but simplify design and enable 
+                JTAG memory access</li>
+            <li><strong>Scalability:</strong> Design is parameterizable; could implement 8×8 for lower resource usage 
+                or tile 4×4 subarrays for 16×16 logical operation</li>
+          </ul>
+
+          <!-- Future Work -->
+          <h2>Future Enhancements</h2>
+          <ul>
+            <li>Increase clock frequency to 100 MHz for 2× performance boost</li>
+            <li>Implement dual-port BRAM to double load/store throughput</li>
+            <li>Add DMA engine for continuous streaming operation</li>
+            <li>Integrate with HPS for software control and larger matrix tiling</li>
+            <li>Implement quantization-aware training support for ML inference</li>
+            <li>Add multiple systolic arrays for batch processing</li>
+          </ul>
+
+          <!-- Technical Details -->
+          <h2>Technical Stack</h2>
+          <ul>
+            <li><strong>Language:</strong> SystemVerilog</li>
+            <li><strong>FPGA:</strong> Intel Cyclone V (DE1-SoC, 5CSEMA5F31C6)</li>
+            <li><strong>Tools:</strong> Quartus Prime 18.1, ModelSim, SignalTap II</li>
+            <li><strong>Verification:</strong> Python (NumPy) for reference implementation</li>
+            <li><strong>Interface:</strong> In-System Memory Content Editor via JTAG</li>
+          </ul>
+
+          <!-- Optional: Repo / Docs buttons -->
+          <!--
+          <ul class="actions special">
+            <li><a href="https://github.com/yassinabulnaga/systolic-array" class="button">View Source</a></li>
+            <li><a href="documents/systolic_array_report.pdf" class="button">Full Report</a></li>
+          </ul>
+          -->
+        </section>
+      </div>
+
+      <!-- Footer -->
+      <footer id="footer">
+        <section class="split contact">
+          <section class="alt"><h3>Address</h3><p>3615 W 17 Ave<br />Vancouver, BC</p></section>
+          <section><h3>Phone</h3><p><a href="tel:+12362685455">+1 (236) 268-5455</a></p></section>
+          <section><h3>Email</h3><p><a href="mailto:yabulnag@gmail.com">yabulnag@gmail.com</a></p></section>
+          <section><h3>Social</h3>
+            <ul class="icons alt">
+              <li><a href="https://www.linkedin.com/in/yassinabulnaga/" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+              <li><a href="https://github.com/yassinabulnaga" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+            </ul>
+          </section>
+        </section>
+      </footer>
+
+      <!-- Copyright -->
+      <div id="copyright">
+        <ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>
