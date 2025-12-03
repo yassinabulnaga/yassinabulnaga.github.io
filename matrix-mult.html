@@ -91,17 +91,6 @@
 <li><strong>Latency:</strong> 3N − 2 cycles, for an NxN matrix.</li>
           </ul>
 
-          <h3>Memory Architecture</h3>
-          <p>
-            Three single-port BRAMs provide data storage:
-          </p>
-          <ul>
-            <li><strong>BRAM A (8-bit × 256):</strong> Stores matrix A in row-major order</li>
-            <li><strong>BRAM B (8-bit × 256):</strong> Stores matrix B in row-major order</li>
-            <li><strong>BRAM C (32-bit × 256):</strong> Stores result matrix C with full 32-bit precision</li>
-            <li><strong>Address mapping:</strong> addr = row × 16 + col for consistent indexing</li>
-            <li><strong>In-System Memory Content Editor compatible:</strong> Allows runtime matrix loading via JTAG</li>
-          </ul>
 
           <h3>Control FSM</h3>
           <p>
@@ -121,9 +110,8 @@
 
           <h3>Functional Verification</h3>
           <ul>
-            <li><strong>Identity Matrix Test:</strong> A × I = A for all 256 elements ✓</li>
-            <li><strong>Random Matrix Test:</strong> Compared against NumPy reference implementation, 255/256 correct, 
-                with remaining error traced to timing bug</li>
+            <li><strong>Identity Matrix Test:</strong> A × I = A for all 256 elements </li>
+            <li><strong>Random Matrix Test:</strong> Compared against NumPy reference implementation</li>
             <li><strong>Boundary Conditions:</strong> Tested diagonal elements, corners, and overflow scenarios</li>
             <li><strong>Data Integrity:</strong> Verified row-major storage format and address decoding logic</li>
           </ul>
@@ -138,43 +126,9 @@
           </ul>
 
           <!-- Performance Results -->
-          <h2>Performance Results</h2>
-
-          <h3>Measured Hardware Performance</h3>
+          <h2>Performance Comparision</h2>
           <table style="width:100%; border-collapse:collapse; margin:20px 0;">
-            <tr style="background:#2e3842; color:#fff;">
-              <th style="padding:10px; text-align:left;">Metric</th>
-              <th style="padding:10px; text-align:right;">Value</th>
-            </tr>
-            <tr style="background:#f5f5f5;">
-              <td style="padding:10px;">Clock Frequency</td>
-              <td style="padding:10px; text-align:right;">50 MHz</td>
-            </tr>
-            <tr>
-              <td style="padding:10px;">Compute Phase Latency</td>
-              <td style="padding:10px; text-align:right;"><strong>920 ns (46 cycles)</strong></td>
-            </tr>
-            <tr style="background:#f5f5f5;">
-              <td style="padding:10px;">Total Operation Time (Load+Compute+Store)</td>
-              <td style="padding:10px; text-align:right;">11.2 µs (560 cycles)</td>
-            </tr>
-            <tr>
-              <td style="padding:10px;">Throughput</td>
-              <td style="padding:10px; text-align:right;"><strong>4.45 GMAC/s</strong></td>
-            </tr>
-            <tr style="background:#f5f5f5;">
-              <td style="padding:10px;">Operations per Cycle</td>
-              <td style="padding:10px; text-align:right;">89 MACs/cycle (256 PEs active)</td>
-            </tr>
-            <tr>
-              <td style="padding:10px;">Matrix Multiplications per Second</td>
-              <td style="padding:10px; text-align:right;">89,285</td>
-            </tr>
-          </table>
-
-          <h3>Performance Comparison</h3>
-          <table style="width:100%; border-collapse:collapse; margin:20px 0;">
-            <tr style="background:#2e3842; color:#fff;">
+            <tr style="background:#2e3842; color:#fffff;">
               <th style="padding:10px; text-align:left;">Implementation</th>
               <th style="padding:10px; text-align:right;">Time</th>
               <th style="padding:10px; text-align:right;">Speedup vs FPGA</th>
@@ -187,7 +141,7 @@
             <tr>
               <td style="padding:10px;">Python Naive Triple Loop</td>
               <td style="padding:10px; text-align:right;">2.7 ms</td>
-              <td style="padding:10px; text-align:right;"><strong>2,985× slower</strong></td>
+              <td style="padding:10px; text-align:right;">2,985× slower</td>
             </tr>
             <tr style="background:#f5f5f5;">
               <td style="padding:10px;">C Naive Loop </td>
@@ -220,6 +174,10 @@
              <li><strong>Higher Numeric Precision:</strong> Support wider data formats (int16, fp16/bfloat16, configurable fixed-point) to target higher accuracy ML inference workloads.</li>
               <li><strong>DMA Integration:</strong> Add a dedicated DMA engine for continuous A/B streaming and overlapped compute–load–store phases.</li>
           </ul>
+
+                    <p style="text-align:center;">
+            <img src="images/meme.jpg" alt="Meme" style="max-width:400px;width:100%;height:auto;" />
+          </p>
 
 
           <!-- Optional: Repo / Docs buttons -->
