@@ -58,21 +58,23 @@
   <header class="major">
     <span class="date">Featured Project</span>
     <h2>
-      <a href="matrix-mult.html">
-        Systolic Array GEMM<br />
-        Accelerator
+      <a href="risc-cpu.html">
+        16-Bit RISC CPU 
+        
       </a>
     </h2>
     <p>
-      A high-performance GEMM accelerator based on a 2D systolic-array architecture.
-      Designed for parallel multiply-accumulate execution and FPGA deployment.
+      A modular CPU designed in Verilog with separate datapath and control FSM.
+      Implements ALU operations, branches, memory access, and memory-mapped I/O.
+      Verified in ModelSim, synthesized in Quartus, and deployed on the DE1-SoC board.
     </p>
   </header>
-  <a href="matrix-mult.html" class="image main">
-    <img src="images/BD_MM2.jpg" alt="Matrix Multiply Accelerator Block Diagram" />
+  <a href="risc-cpu.html" class="image main">
+    <img src="images/BlockDiagramCpen211.png"
+         alt="16-Bit RISC CPU Block Diagram" />
   </a>
   <ul class="actions special">
-    <li><a href="matrix-mult.html" class="button large">Details</a></li>
+    <li><a href="risc-cpu.html" class="button large">Details</a></li>
   </ul>
 </article>
 
@@ -81,17 +83,22 @@
 
   <article>
     <header>
-      <h2><a href="risc-cpu.html">16-Bit RISC CPU on DE1-SoC</a></h2>
+      <h2>
+        <a href="matrix-mult.html">
+          Systolic Array GEMM Accelerator
+        </a>
+      </h2>
       <p>
-        A modular CPU designed in Verilog featuring a pipelined datapath,
-        control FSM, memory-mapped I/O, and ModelSim verification.
+        A GEMM accelerator built around a tiled systolic-array architecture
+        for efficient matrix multiplication.
       </p>
     </header>
-    <a href="risc-cpu.html" class="image fit">
-      <img src="images/BlockDiagramCpen211.png" alt="16-Bit RISC CPU Block Diagram">
+    <a href="matrix-mult.html" class="image fit">
+      <img src="images/BD_MM2.jpg"
+           alt="Matrix Multiply Accelerator Block Diagram">
     </a>
     <ul class="actions special">
-      <li><a href="risc-cpu.html" class="button">View Progress</a></li>
+      <li><a href="matrix-mult.html" class="button">View Progress</a></li>
     </ul>
   </article>
 
@@ -206,6 +213,7 @@
 	</body>
 
 </html>
+
 
 
 
