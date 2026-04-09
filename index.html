@@ -15,207 +15,223 @@
 	<body class="is-preload">
 
 		<!-- Wrapper -->
-			<div id="wrapper" class="fade-in">
-<!-- Intro -->
-<div id="intro">
-  <h1>Yassin Abulnaga's Portfolio</h1>
-  <p>
-    Electrical Engineering @ UBC.<br />
-    Experienced in FPGA/RTL design, Embedded Systems, and Digital Design.
-  </p>
-  <ul class="actions">
-    <li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
-  </ul>
-</div>
+		<div id="wrapper" class="fade-in">
 
-<!-- Header -->
-<header id="header">
-  <a href="index.html" class="logo">About</a>
-</header>
+			<!-- Intro -->
+			<div id="intro">
+				<h1>Yassin Abulnaga</h1>
+				<p>
+					SoC Engineering Intern @ ARM &nbsp;|&nbsp; EE @ UBC<br />
+					<span style="font-size:0.85em; letter-spacing:0.05em;">
+						SystemVerilog &middot; RTL Design &middot; FPGA &middot; Altium &middot; Embedded Systems &middot; Analog Electronics
+					</span>
+				</p>
+				<ul class="actions">
+					<li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
+				</ul>
+			</div>
 
+			<!-- Header -->
+			<header id="header">
+				<a href="index.html" class="logo">About</a>
+			</header>
 
-<nav id="nav">
-  <ul class="links">
-    <li class="active"><a href="index.html">Home</a></li>
-    <li><a href="resume.html">Resume</a></li>
-    <li><a href="matrix-mult.html">Systolic GEMM Accelerator</a></li>
-    <li><a href="risc-cpu.html">RISC CPU</a></li>
-    <li><a href="arc4cracker.html">ARC4 Accelerator</a></li>
-  </ul>
-  <ul class="icons">
-    <li><a href="https://www.linkedin.com/in/yassinabulnaga/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
-    <li><a href="https://github.com/yassinabulnaga" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-  </ul>
-</nav>
+			<!-- Nav -->
+			<nav id="nav">
+				<ul class="links">
+					<li class="active"><a href="index.html">Home</a></li>
+					<li><a href="resume.html">Resume</a></li>
+					<li><a href="flash-attention.html">FlashAttention Accelerator</a></li>
+					<li><a href="matrix-mult.html">Systolic GEMM Accelerator</a></li>
+					<li><a href="risc-cpu.html">RISC CPU</a></li>
+					<li><a href="piano-robot.html">Piano Robot</a></li>
+					<li><a href="arc4cracker.html">ARC4 Accelerator</a></li>
+				</ul>
+				<ul class="icons">
+					<li><a href="https://www.linkedin.com/in/yassinabulnaga/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+					<li><a href="https://github.com/yassinabulnaga" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+				</ul>
+			</nav>
 
-  
+			<!-- Main -->
+			<div id="main">
 
-				<!-- Main -->
-					<div id="main">
+				<!-- Featured Project -->
+				<article class="post featured">
+					<header class="major">
+						<span class="date">Featured Project</span>
+						<h2>
+							<a href="flash-attention.html">FlashAttention FPGA Accelerator</a>
+						</h2>
+						<p>
+							A tiled FlashAttention kernel targeting the DE1-SoC (Cyclone V), designed to compute
+							scaled dot-product attention within on-chip SRAM to eliminate HBM bandwidth bottlenecks.
+							Architecture features an 8&times;8 systolic PE array with FP16/fixed-point arithmetic,
+							DMA-driven memory subsystem, and fused softmax-multiply operators &mdash;
+							all verified in SystemVerilog simulation before FPGA deployment.
+						</p>
+					</header>
+					<a href="flash-attention.html" class="image main">
+						<img src="images/flash_attention_bd.png" alt="FlashAttention Accelerator Block Diagram" />
+					</a>
+					<ul class="actions special">
+						<li><a href="flash-attention.html" class="button large">Details</a></li>
+					</ul>
+				</article>
 
-<!-- Featured Project -->
-<article class="post featured">
-  <header class="major">
-    <span class="date">Featured Project</span>
-    <h2>
-      <a href="risc-cpu.html">
-        16-Bit RISC CPU 
-        
-      </a>
-    </h2>
-    <p>
-      A modular CPU designed in Verilog with separate datapath and control FSM.
-      Implements ALU operations, branches, memory access, and memory-mapped I/O.
-      Verified in ModelSim, synthesized in Quartus, and deployed on the DE1-SoC board.
-    </p>
-  </header>
-  <a href="risc-cpu.html" class="image main">
-    <img src="images/BlockDiagramCpen211.png"
-         alt="16-Bit RISC CPU Block Diagram" />
-  </a>
-  <ul class="actions special">
-    <li><a href="risc-cpu.html" class="button large">Details</a></li>
-  </ul>
-</article>
+				<!-- Posts -->
+				<section class="posts">
 
-<!-- Posts -->
-<section class="posts">
+					<!-- Systolic Array -->
+					<article>
+						<header>
+							<h2><a href="matrix-mult.html">Systolic Array GEMM Accelerator</a></h2>
+						</header>
+						<p>
+							16&times;16 systolic PE array implemented in SystemVerilog, achieving 4.45&nbsp;GMAC/s
+							at 50&nbsp;MHz on the DE1-SoC. Verified with directed and random testbenches in ModelSim;
+							synthesized and timed in Quartus.
+						</p>
+						<a href="matrix-mult.html" class="image fit">
+							<img src="images/BD_MM2.jpg" alt="Systolic Array GEMM Accelerator Block Diagram">
+						</a>
+						<ul class="actions special">
+							<li><a href="matrix-mult.html" class="button">Details</a></li>
+						</ul>
+					</article>
 
-  <article>
-    <header>
-      <h2>
-        <a href="matrix-mult.html">
-          Systolic Array GEMM Accelerator
-        </a>
-      </h2>
-      <p>
-        A GEMM accelerator built around a tiled systolic-array architecture
-        for efficient matrix multiplication.
-      </p>
-    </header>
-    <a href="matrix-mult.html" class="image fit">
-      <img src="images/BD_MM2.jpg"
-           alt="Matrix Multiply Accelerator Block Diagram">
-    </a>
-    <ul class="actions special">
-      <li><a href="matrix-mult.html" class="button">View Progress</a></li>
-    </ul>
-  </article>
+					<!-- RISC CPU -->
+					<article>
+						<header>
+							<h2><a href="risc-cpu.html">16-Bit RISC CPU</a></h2>
+						</header>
+						<p>
+							Modular CPU in Verilog with separate datapath and control FSM. Supports ALU ops,
+							branches, memory-mapped I/O, and multi-cycle memory access. Verified in ModelSim
+							and deployed on DE1-SoC via Quartus.
+						</p>
+						<a href="risc-cpu.html" class="image fit">
+							<img src="images/BlockDiagramCpen211.png" alt="16-Bit RISC CPU Block Diagram">
+						</a>
+						<ul class="actions special">
+							<li><a href="risc-cpu.html" class="button">Details</a></li>
+						</ul>
+					</article>
 
+					<!-- Piano Robot -->
+					<article>
+						<header>
+							<h2><a href="piano-robot.html">Autonomous Piano Robot</a></h2>
+						</header>
+						<p>
+							Three custom PCBs designed in Altium: STM32F302C6T6 MCU/power board,
+							H-bridge motor driver, and solenoid driver. Full hardware bring-up including
+							power rail validation, ST-Link flashing, and gate-drive debugging.
+						</p>
+						<a href="piano-robot.html" class="image fit">
+							<img src="images/piano_robot.jpg" alt="Piano Robot PCB">
+						</a>
+						<ul class="actions special">
+							<li><a href="piano-robot.html" class="button">Details</a></li>
+						</ul>
+					</article>
 
-	<!-- Project card: Quad-Core ARC4 Cracker -->
-<article>
-  <header>
-    <h2><a href="arc4cracker.html">Quad-Core ARC4 Cracker</a></h2>
-    <p>Developed a ARC4 decryption engine using a quad-core brute-force architecture.</p>
-  </header>
-  <a href="arc4cracker.html" class="image fit">
-    <img src="images/Arc_BD.jpg" alt="Quad-Core ARC4 Block Diagram">
-  </a>
-  <ul class="actions special">
-    <li><a href="arc4cracker.html" class="button">Details</a></li>
-  </ul>
-</article>
+					<!-- ARC4 Cracker -->
+					<article>
+						<header>
+							<h2><a href="arc4cracker.html">Quad-Core ARC4 Cracker</a></h2>
+						</header>
+						<p>
+							ARC4 brute-force decryption engine scaled from single-core to 8-core parallel
+							architecture in SystemVerilog, with PLL clock boost. Significant runtime
+							speedup verified on DE1-SoC via Quartus synthesis and ModelSim simulation.
+						</p>
+						<a href="arc4cracker.html" class="image fit">
+							<img src="images/Arc_BD.jpg" alt="Quad-Core ARC4 Block Diagram">
+						</a>
+						<ul class="actions special">
+							<li><a href="arc4cracker.html" class="button">Details</a></li>
+						</ul>
+					</article>
 
+					<!-- Coin Retrieval Robot -->
+					<article>
+						<header>
+							<h2><a href="coin-robot.html">Coin Retrieval Robot</a></h2>
+						</header>
+						<p>
+							Dual-MCU robot with STM32-based autonomous navigation and PIC32 remote control.
+							Electromagnet pickup mechanism with IR sensing and closed-loop motor control.
+						</p>
+						<a href="coin-robot.html" class="image fit">
+							<img src="images/robot.png" alt="Coin Retrieval Robot">
+						</a>
+						<ul class="actions special">
+							<li><a href="coin-robot.html" class="button">Details</a></li>
+						</ul>
+					</article>
 
+					<!-- Reflow Oven -->
+					<article>
+						<header>
+							<h2><a href="reflow-oven.html">PCB Reflow Oven Controller</a></h2>
+						</header>
+						<p>
+							Closed-loop reflow profile controller written in 8051 assembly.
+							K-type thermocouple input with PID temperature regulation across
+							preheat, soak, reflow, and cooldown stages.
+						</p>
+						<a href="reflow-oven.html" class="image fit">
+							<img src="images/Block.png" alt="Reflow Oven Controller">
+						</a>
+						<ul class="actions special">
+							<li><a href="reflow-oven.html" class="button">Details</a></li>
+						</ul>
+					</article>
 
-  <!-- Project card: Coin Retrieval Robot -->
-  <article>
-    <header>
-      <h2><a href="coin-robot.html">Coin Retrieval Robot</a></h2>
-  <p>Dual-MCU robot with STM32 autonomy + PIC32 remote, and electromagnet pickup.</p>
-    </header>
-    <a href="coin-robot.html" class="image fit">
-      <img src="images/robot.png" alt="Coin Retrieval Robot">
-    </a>
-    <ul class="actions special">
-      <li><a href="coin-robot.html" class="button">Details</a></li>
-    </ul>
-  </article>
+				</section>
 
-  <!-- Project card: Reflow Oven -->
-  <article>
-    <header>
-      <h2><a href="reflow-oven.html">Oven Reflow Controller</a></h2>
-    </header>
-<p>PCB reflow oven using 8051 assembly and K-type thermocouple input.</p>
-    <a href="reflow-oven.html" class="image fit">
-      <img src="images/Block.png" alt="Reflow Oven Controller">
-    </a>
-    <ul class="actions special">
-      <li><a href="reflow-oven.html" class="button">Details</a></li>
-    </ul>
-  </article>
+			</div>
 
-</section>
- <!-- Footer -->
-<footer id="footer">
-  <section class="split contact">
-    <section class="alt">
-      <h3>Address</h3>
-      <p>3615 W 17 Ave<br />Vancouver, BC</p>
-    </section>
-    <section>
-      <h3>Phone</h3>
-      <p><a href="tel:+12362685455">+1 (236) 268-5455</a></p>
-    </section>
-    <section>
-      <h3>Email</h3>
-      <p><a href="mailto:yabulnag@gmail.com">yabulnag@gmail.com</a></p>
-    </section>
-    <section>
-      <h3>Social</h3>
-      <ul class="icons alt">
-        <li>
-          <a href="https://www.linkedin.com/in/yassinabulnaga/" 
-             class="icon brands alt fa-linkedin"
-             target="_blank" rel="noopener">
-            <span class="label">LinkedIn</span>
-          </a>
-        </li>
-        <li>
-          <a href="https://github.com/yassinabulnaga" 
-             class="icon brands alt fa-github"
-             target="_blank" rel="noopener">
-            <span class="label">GitHub</span>
-          </a>
-        </li>
-      </ul>
-    </section>
-  </section>
-</footer>
+			<!-- Footer -->
+			<footer id="footer">
+				<section class="split contact">
+					<section>
+						<h3>Email</h3>
+						<p><a href="mailto:yabulnag@gmail.com">yabulnag@gmail.com</a></p>
+					</section>
+					<section>
+						<h3>Social</h3>
+						<ul class="icons alt">
+							<li>
+								<a href="https://www.linkedin.com/in/yassinabulnaga/"
+								   class="icon brands alt fa-linkedin"
+								   target="_blank" rel="noopener">
+									<span class="label">LinkedIn</span>
+								</a>
+							</li>
+							<li>
+								<a href="https://github.com/yassinabulnaga"
+								   class="icon brands alt fa-github"
+								   target="_blank" rel="noopener">
+									<span class="label">GitHub</span>
+								</a>
+							</li>
+						</ul>
+					</section>
+				</section>
+			</footer>
 
-
+		</div><!-- /wrapper -->
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.scrollex.min.js"></script>
+		<script src="assets/js/jquery.scrolly.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
 
 	</body>
-
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
