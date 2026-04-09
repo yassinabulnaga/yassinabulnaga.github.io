@@ -63,11 +63,7 @@
 							<a href="flash-attention.html">FlashAttention FPGA Accelerator</a>
 						</h2>
 						<p>
-							A tiled FlashAttention kernel targeting the DE1-SoC (Cyclone V), designed to compute
-							scaled dot-product attention within on-chip SRAM to eliminate HBM bandwidth bottlenecks.
-							Architecture features an 8&times;8 systolic PE array with FP16/fixed-point arithmetic,
-							DMA-driven memory subsystem, and fused softmax-multiply operators &mdash;
-							all verified in SystemVerilog simulation before FPGA deployment.
+							A tiled FlashAttention FPGA accelerator to computes scaled dot-product attention entirely on-chip.
 						</p>
 					</header>
 					<a href="flash-attention.html" class="image main">
@@ -84,10 +80,10 @@
 					<!-- MacSkip Research -->
 					<article>
 						<header>
-							<h2><a href="#">Skip-MAC Transformer Research</a></h2>
+							<h2><a href="#">Adaptive Sparsity for DNNs</a></h2>
 						</header>
 						<p>
-							Research in progress with Prof. Brad Quinton @ UBC ECE. Learnable activation gating for MAC skipping in transformer inference — coming soon.
+							Learnable MAC Skipping for Neural Network Inference (ongoing research, UBC ECE)
 						</p>
 						<ul class="actions special">
 							<li><a href="#" class="button disabled">Coming Soon</a></li>
@@ -100,9 +96,7 @@
 							<h2><a href="matrix-mult.html">Systolic Array GEMM Accelerator</a></h2>
 						</header>
 						<p>
-							16&times;16 systolic PE array implemented in SystemVerilog, achieving 4.45&nbsp;GMAC/s
-							at 50&nbsp;MHz on the DE1-SoC. Verified with directed and random testbenches in ModelSim;
-							synthesized and timed in Quartus.
+							A 16×16 systolic array accelerator in SystemVerilog achieving 4.45 GMAC/s at 50 MHz on the DE1-SoC.
 						</p>
 						<a href="matrix-mult.html" class="image fit">
 							<img src="images/BD_MM2.jpg" alt="Systolic Array GEMM Accelerator Block Diagram">
@@ -118,9 +112,7 @@
 							<h2><a href="risc-cpu.html">16-Bit RISC CPU</a></h2>
 						</header>
 						<p>
-							Modular CPU in Verilog with separate datapath and control FSM. Supports ALU ops,
-							branches, memory-mapped I/O, and multi-cycle memory access. Verified in ModelSim
-							and deployed on DE1-SoC via Quartus.
+							A modular Verilog CPU with a datapath and control FSM supporting ALU operations, branching, and memory-mapped I/O.
 						</p>
 						<a href="risc-cpu.html" class="image fit">
 							<img src="images/BlockDiagramCpen211.png" alt="16-Bit RISC CPU Block Diagram">
@@ -136,9 +128,8 @@
 							<h2><a href="piano-robot.html">Autonomous Piano Robot</a></h2>
 						</header>
 						<p>
-							Three custom PCBs designed in Altium: STM32F302C6T6 MCU/power board,
-							H-bridge motor driver, and solenoid driver. Full hardware bring-up including
-							power rail validation, ST-Link flashing, and gate-drive debugging.
+							Three custom Altium-designed PCBs (STM32 MCU/power, H-bridge motor driver, solenoid driver) 
+							with full hardware bring-up and validation.
 						</p>
 						<a href="piano-robot.html" class="image fit">
 							<img src="images/piano_robot.jpg" alt="Piano Robot PCB">
